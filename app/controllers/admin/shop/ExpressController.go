@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package shop
 
@@ -16,12 +16,12 @@ import (
 	"yixiang.co/go-mall/pkg/util"
 )
 
-// 快递api
+// express API
 type ExpressController struct {
 }
 
-// @Title 快递列表
-// @Description 快递列表
+// @Title express carrier list
+// @Description express carrier list
 // @Success 200 {object} app.Response
 // @router / [get]
 func (e *ExpressController) GetAll(c *gin.Context) {
@@ -40,8 +40,8 @@ func (e *ExpressController) GetAll(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, vo)
 }
 
-// @Title 快递添加
-// @Description 快递添加
+// @Title add express carrier
+// @Description add express carrier
 // @Success 200 {object} app.Response
 // @router / [post]
 func (e *ExpressController) Post(c *gin.Context) {
@@ -69,8 +69,8 @@ func (e *ExpressController) Post(c *gin.Context) {
 
 }
 
-// @Title 快递修改
-// @Description 快递修改
+// @Title update express carrier
+// @Description update express carrier
 // @Success 200 {object} app.Response
 // @router / [put]
 func (e *ExpressController) Put(c *gin.Context) {
@@ -95,8 +95,8 @@ func (e *ExpressController) Put(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, nil)
 }
 
-// @Title 快递删除
-// @Description 快递删除
+// @Title delete express carrier
+// @Description delete express carrier
 // @Success 200 {object} app.Response
 // @router /:id [delete]
 func (e *ExpressController) Delete(c *gin.Context) {

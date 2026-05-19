@@ -1,13 +1,13 @@
 package product
 
 const (
-	//精品推荐
+	// featured
 	STATUS_1 = iota +1
-	//热门榜单
+	// hot list
 	STATUS_2
-	//首发新品
+	// new arrivals
 	STATUS_3
-	//猜你喜欢
+	// recommended
 	STATUS_4
 )
 

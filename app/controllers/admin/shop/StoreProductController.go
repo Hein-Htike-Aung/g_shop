@@ -11,12 +11,12 @@ import (
 	"yixiang.co/go-mall/pkg/util"
 )
 
-// 商品 api
+// product API
 type StoreProductController struct {
 }
 
-// @Title 商品列表
-// @Description 商品列表
+// @Title product list
+// @Description product list
 // @Success 200 {object} app.Response
 // @router / [get]
 func (e *StoreProductController) GetAll(c *gin.Context) {
@@ -35,8 +35,8 @@ func (e *StoreProductController) GetAll(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, vo)
 }
 
-// @Title 获取商品信息
-// @Description 获取商品信息
+// @Title get product info
+// @Description get product info
 // @Success 200 {object} app.Response
 // @router /info/:id [get]
 func (e *StoreProductController) GetInfo(c *gin.Context) {
@@ -51,8 +51,8 @@ func (e *StoreProductController) GetInfo(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, vo)
 }
 
-// @Title 商品添加
-// @Description 商品添加
+// @Title add product
+// @Description add product
 // @Success 200 {object} app.Response
 // @router /addOrSave [post]
 func (e *StoreProductController) Post(c *gin.Context) {
@@ -78,8 +78,8 @@ func (e *StoreProductController) Post(c *gin.Context) {
 
 }
 
-// @Title 商品上下架
-// @Description 商品上下架
+// @Title toggle product shelf status
+// @Description toggle product shelf status
 // @Success 200 {object} app.Response
 // @router /onsale/:id [post]
 func (e *StoreProductController) OnSale(c *gin.Context) {
@@ -102,8 +102,8 @@ func (e *StoreProductController) OnSale(c *gin.Context) {
 
 }
 
-// @Title 商品删除
-// @Description 商品删除
+// @Title delete product
+// @Description delete product
 // @Success 200 {object} app.Response
 // @router /:id [delete]
 func (e *StoreProductController) Delete(c *gin.Context) {
@@ -123,8 +123,8 @@ func (e *StoreProductController) Delete(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, nil)
 }
 
-// @Title 商品sku生成
-// @Description 商品sku生成
+// @Title generate product SKU
+// @Description generate product SKU
 // @Success 200 {object} app.Response
 // @router /isFormatAttr/:id [post]
 func (e *StoreProductController) FormatAttr(c *gin.Context) {

@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package models
 
@@ -68,7 +68,7 @@ func FindByUserId(id int64) ([]string, error) {
 	return permissions, nil
 }
 
-// 根据用户名返回
+// lookup by username
 func GetUserByUsername(name string) (*SysUser, error) {
 	var user SysUser
 	err := db.Preload("Roles").Preload("Jobs").Preload("Depts").Where("username = ? and is_del = ? ", name, 0).First(&user).Error

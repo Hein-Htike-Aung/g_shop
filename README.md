@@ -1,6 +1,4 @@
-# yshop-gin
-
-Go backend for **yshop** (意象商城), an e-commerce admin and mall API. This repo provides REST APIs for shop management, RBAC, WeChat integration, orders, and related features.
+an e-commerce admin and mall API. This repo provides REST APIs for shop management, RBAC, WeChat integration, orders, and related features.
 
 > **Module path:** Imports use `yixiang.co/go-mall` (see `go.mod`). That is the Go module name, not a folder on disk—the code lives in this repository root.
 
@@ -178,9 +176,3 @@ Run behind nginx or another reverse proxy in production. Set `server.run-mode` t
 - **Import path vs directory:** All packages import as `yixiang.co/go-mall/...` while the repo folder may be named `yshop-gin`. To rename the module, change the `module` line in `go.mod` and update imports project-wide.
 - **Soft delete:** Models embedding `BaseModel` use GORM soft delete (`isDel`).
 - **Permissions:** Non-`admin` roles are checked with Casbin against request path and HTTP method.
-
-## License & credits
-
-Based on the open-source [yshop-gin](https://github.com/guchengwuyue/yshop-gin) project (www.yixiang.co).
-
-Notable dependencies: Gin, GORM, Casbin, jwt-go, WeChat SDK ([silenceper/wechat](https://github.com/silenceper/wechat)), [gopay](https://github.com/go-pay/gopay).

@@ -9,7 +9,7 @@ type RelationParam struct {
 
 func (p *RelationParam) Valid(v *validation.Validation)  {
 	if vv := v.Required(p.Id,"yshop-warning"); !vv.Ok {
-		vv.Message("参数有误")
+		vv.Message("invalid parameters")
 		return
 	}
 }

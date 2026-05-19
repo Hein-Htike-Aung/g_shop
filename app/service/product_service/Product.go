@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package product_service
 
@@ -139,30 +139,30 @@ func (d *Product) GetDetail() (*proVo.ProductDetail,error) {
 		First(&storeProduct).Error
 	if err != nil {
 		global.YSHOP_LOG.Error(err)
-		return nil,errors.New("获取商品失败")
+		return nil,errors.New("failed to load product")
 	}
-	//获取sku
+	// load SKU
 	returnMap,err := getProductAttrDetail(d.Id)
 	if err != nil {
 		global.YSHOP_LOG.Error(err)
-		return nil,errors.New("获取商品sku失败")
+		return nil,errors.New("failed to load product SKU")
 	}
 	err = copier.Copy(&productVo, storeProduct)
 	productVo.SliderImageArr = strings.Split(storeProduct.SliderImage,",")
 	if err != nil {
 		global.YSHOP_LOG.Error(err)
-		return nil,errors.New("商品转化失败")
+		return nil,errors.New("failed to convert product")
 	}
-	//此处处理登录的用户
+	// handle logged-in user
 	//todo
 	if d.Uid > 0 {
 		isCollect := product_relation_service.IsRelation(d.Id,d.Uid)
 		productVo.UserCollect = isCollect
 	}
 
-	//此处处理已经评论的数量-移动端需要，单个评价与好评旅，好评数量
+	// review counts for mobile (single review, good review rate)
 	//todo
-	//此处处理运费模板
+	// shipping template
 	//todo
 	detail := proVo.ProductDetail{
 		StoreInfo: productVo,
@@ -173,7 +173,7 @@ func (d *Product) GetDetail() (*proVo.ProductDetail,error) {
 	return &detail,nil
 }
 
-//获取商品sku
+// load product SKU
 func getProductAttrDetail(productId int64) (map[string]interface{},error) {
 	var (
 		storeProductAttrs []models.YshopStoreProductAttr
@@ -261,17 +261,17 @@ func (d *Product) AddOrSaveProduct() (err error) {
 	}
 
 
-	//sku处理
+	// SKU processing
 	if m.SpecType == productEnum.SEPC_TYPE_0 {
-		list1 := []string{"默认"}
+		list1 := []string{"Default"}
 		formatDetail := productDto.FormatDetail{
-			Value:  "规格",
+			Value:  "Spec",
 			Detail: list1,
 		}
 		productFormat := m.Attrs[0]
-		productFormat.Value1 = "规格"
+		productFormat.Value1 = "Spec"
 		productFormat.Detail = map[string]string{
-			"规格": "默认",
+			"Spec": "Default",
 		}
 		err = insertProductSku([]productDto.FormatDetail{formatDetail}, []productDto.ProductFormat{productFormat}, productId)
 	} else {
@@ -364,7 +364,7 @@ func insertProductSku(items []productDto.FormatDetail, attrs []productDto.Produc
 
 }
 
-//计算获取属性结果最小值
+// min attribute result
 func computeProduct(attrs []productDto.ProductFormat) map[string]interface{} {
 	returnMap := make(map[string]interface{})
 
@@ -394,7 +394,7 @@ func computeProduct(attrs []productDto.ProductFormat) map[string]interface{} {
 	return returnMap
 }
 
-//获取生成的商品sku
+// generated product SKU
 func getFormatAttr(id int64, jsonObj map[string]interface{}) map[string]interface{} {
 	var (
 		mapData          = make(map[string]interface{})
@@ -420,7 +420,7 @@ func getFormatAttr(id int64, jsonObj map[string]interface{}) map[string]interfac
 		detailMap := mapData["detail"]
 		valueMap := make(map[string]interface{})
 
-		//组合表格头
+		// build table headers
 		var i int = 0
 		logging.Info(detailMap)
 		if count == 0 {
@@ -439,7 +439,7 @@ func getFormatAttr(id int64, jsonObj map[string]interface{}) map[string]interfac
 			count++
 		}
 
-		//组合值
+		// build values
 		j := 0
 		skuArr := make([]string, 0, len(headerMapList))
 		for _, kk := range headerMapList {
@@ -499,11 +499,11 @@ func getFormatAttr(id int64, jsonObj map[string]interface{}) map[string]interfac
 	return mapData
 }
 
-//组合map
+// build map
 func addMap(headerMapList []map[string]interface{}, align string) []map[string]interface{} {
 
 	headMap := map[string]interface{}{
-		"title":    "图片",
+		"title":    "Image",
 		"slot":     "pic",
 		"align":    align,
 		"minWidth": 80,
@@ -511,7 +511,7 @@ func addMap(headerMapList []map[string]interface{}, align string) []map[string]i
 	headerMapList = append(headerMapList, headMap)
 
 	headMap = map[string]interface{}{
-		"title":    "售价",
+		"title":    "Price",
 		"slot":     "price",
 		"align":    align,
 		"minWidth": 120,
@@ -519,7 +519,7 @@ func addMap(headerMapList []map[string]interface{}, align string) []map[string]i
 	headerMapList = append(headerMapList, headMap)
 
 	headMap = map[string]interface{}{
-		"title":    "成本价",
+		"title":    "Cost",
 		"slot":     "cost",
 		"align":    align,
 		"minWidth": 140,
@@ -527,7 +527,7 @@ func addMap(headerMapList []map[string]interface{}, align string) []map[string]i
 	headerMapList = append(headerMapList, headMap)
 
 	headMap = map[string]interface{}{
-		"title":    "原价",
+		"title":    "Original price",
 		"slot":     "ot_price",
 		"align":    align,
 		"minWidth": 140,
@@ -535,7 +535,7 @@ func addMap(headerMapList []map[string]interface{}, align string) []map[string]i
 	headerMapList = append(headerMapList, headMap)
 
 	headMap = map[string]interface{}{
-		"title":    "库存",
+		"title":    "Stock",
 		"slot":     "stock",
 		"align":    align,
 		"minWidth": 140,
@@ -543,7 +543,7 @@ func addMap(headerMapList []map[string]interface{}, align string) []map[string]i
 	headerMapList = append(headerMapList, headMap)
 
 	headMap = map[string]interface{}{
-		"title":    "产品编号",
+		"title":    "SKU",
 		"slot":     "bar_code",
 		"align":    align,
 		"minWidth": 140,
@@ -551,7 +551,7 @@ func addMap(headerMapList []map[string]interface{}, align string) []map[string]i
 	headerMapList = append(headerMapList, headMap)
 
 	headMap = map[string]interface{}{
-		"title":    "重量(kg)",
+		"title":    "Weight (kg)",
 		"slot":     "weight",
 		"align":    align,
 		"minWidth": 140,
@@ -559,7 +559,7 @@ func addMap(headerMapList []map[string]interface{}, align string) []map[string]i
 	headerMapList = append(headerMapList, headMap)
 
 	headMap = map[string]interface{}{
-		"title":    "体积(m³)",
+		"title":    "Volume (m³)",
 		"slot":     "volume",
 		"align":    align,
 		"minWidth": 140,
@@ -567,7 +567,7 @@ func addMap(headerMapList []map[string]interface{}, align string) []map[string]i
 	headerMapList = append(headerMapList, headMap)
 
 	headMap = map[string]interface{}{
-		"title":    "操作",
+		"title":    "Actions",
 		"slot":     "action",
 		"align":    align,
 		"minWidth": 70,
@@ -578,14 +578,14 @@ func addMap(headerMapList []map[string]interface{}, align string) []map[string]i
 
 }
 
-//组合sku规则算法
+// SKU rule combinator
 func attrFormat(formatDetailList []productDto.FormatDetail) productDto.Detail {
 	var (
 		data []string
 		res  []map[string]map[string]string
 	)
 
-	if len(formatDetailList) > 1 { //当多个规则时候
+	if len(formatDetailList) > 1 { // multiple rules
 		for i := 0; i < len(formatDetailList)-1; i++ {
 			if i == 0 {
 				data = formatDetailList[i].Detail
@@ -630,7 +630,7 @@ func attrFormat(formatDetailList []productDto.FormatDetail) productDto.Detail {
 			}
 
 		}
-	} else { //一个规则时候
+	} else { // single rule
 		var dataArr []string
 		for _, formatDetail := range formatDetailList {
 			for _, str := range formatDetail.Detail {

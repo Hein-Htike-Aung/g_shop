@@ -29,13 +29,13 @@ func init() {
 
 // @title gin-shop  API
 // @version 1.0
-// @description gin-shop商城后台管理系统
+// @description yshop gin mall admin API
 // @termsOfService https://gitee.com/guchengwuyue/gin-shop
 // @license.name apache2
 func main() {
 	var rootCmd = &cobra.Command{
 		Use:   "yshop=gin",
-		Short: "gin商城系统r",
+		Short: "yshop gin mall API",
 		Long:  "will run serve command",
 
 		PersistentPreRun: func(cmd *cobra.Command, args []string) {
@@ -45,13 +45,13 @@ func main() {
 
 	rootCmd.AddCommand(cmd.CmdServe)
 
-	// 配置默认运行 Web 服务
+	// default command runs the web server
 	cmd.RegisterDefaultCmd(rootCmd, cmd.CmdServe)
 
-	// 注册全局参数，--env
+	// register global --env flag
 	cmd.RegisterGlobalFlags(rootCmd)
 
-	// 执行主命令
+	// execute root command
 	if err := rootCmd.Execute(); err != nil {
 		console.Exit(fmt.Sprintf("Failed to run app with %v: %s", os.Args, err.Error()))
 	}

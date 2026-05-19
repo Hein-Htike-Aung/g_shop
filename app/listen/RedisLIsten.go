@@ -58,5 +58,5 @@ func (c *PSubscriber) Psubscribe() {
 
 func PubCallback(patter, channel, msg string) {
 	print("PubCallback patter : "+patter+" channel : ", channel, " message : ", msg)
-	// TODO:拿到msg后进行后续的业务代码
+	// TODO:handle message in business logic
 }

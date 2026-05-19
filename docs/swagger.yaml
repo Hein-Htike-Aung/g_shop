@@ -10,7 +10,7 @@ definitions:
     type: object
 info:
   contact: {}
-  description: gin-shop商城后台管理系统
+  description: yshop gin mall admin API
   license:
     name: apache2
   termsOfService: https://github.com/guchengwuyue/gin-shop
@@ -19,14 +19,14 @@ info:
 paths:
   /:
     delete:
-      description: 用户删除
+      description: delete user
       responses:
         "200":
           description: OK
           schema:
             $ref: '#/definitions/app.Response'
     get:
-      description: 素材分组列表
+      description: material group list
       responses:
         "200":
           description: OK
@@ -39,7 +39,7 @@ paths:
           schema:
             $ref: '#/definitions/app.Response'
     put:
-      description: 素材分组修改
+      description: update material group
       responses:
         "200":
           description: OK
@@ -47,16 +47,16 @@ paths:
             $ref: '#/definitions/app.Response'
   /:id:
     delete:
-      description: 素材分组删除
+      description: delete material group
       responses:
         "200":
           description: OK
           schema:
             $ref: '#/definitions/app.Response'
     get:
-      description: 获取单个角色
+      description: get role by ID
       parameters:
-      - description: 角色ID
+      - description: role ID
         in: path
         name: id
         required: true
@@ -68,7 +68,7 @@ paths:
             $ref: '#/definitions/app.Response'
   /addOrSave:
     post:
-      description: 商品添加
+      description: add product
       responses:
         "200":
           description: OK
@@ -76,7 +76,7 @@ paths:
             $ref: '#/definitions/app.Response'
   /admin/login:
     post:
-      description: 登录
+      description: login
       responses:
         "200":
           description: OK
@@ -84,7 +84,7 @@ paths:
             $ref: '#/definitions/app.Response'
   /build:
     get:
-      description: 菜单构建
+      description: build menus
       responses:
         "200":
           description: OK
@@ -92,10 +92,10 @@ paths:
             $ref: '#/definitions/app.Response'
   /captcha:
     get:
-      description: 获取验证码
+      description: get captcha
   /center:
     put:
-      description: 用户修改个人信息
+      description: update user profile
       responses:
         "200":
           description: OK
@@ -103,7 +103,7 @@ paths:
             $ref: '#/definitions/app.Response'
   /info:
     get:
-      description: 获取用户信息
+      description: get user info
       responses:
         "200":
           description: OK
@@ -111,7 +111,7 @@ paths:
             $ref: '#/definitions/app.Response'
   /info/:id:
     get:
-      description: 获取商品信息
+      description: get product info
       responses:
         "200":
           description: OK
@@ -119,7 +119,7 @@ paths:
             $ref: '#/definitions/app.Response'
   /isFormatAttr/:id:
     post:
-      description: 商品sku生成
+      description: generate product SKU
       responses:
         "200":
           description: OK
@@ -127,7 +127,7 @@ paths:
             $ref: '#/definitions/app.Response'
   /logout:
     delete:
-      description: 退出登录
+      description: logout
       responses:
         "200":
           description: OK
@@ -135,7 +135,7 @@ paths:
             $ref: '#/definitions/app.Response'
   /menu:
     put:
-      description: 角色菜单更新
+      description: update role menus
       responses:
         "200":
           description: OK
@@ -143,7 +143,7 @@ paths:
             $ref: '#/definitions/app.Response'
   /onsale/:id:
     post:
-      description: 商品上下架
+      description: toggle product shelf status
       responses:
         "200":
           description: OK
@@ -151,7 +151,7 @@ paths:
             $ref: '#/definitions/app.Response'
   /save/:id:
     post:
-      description: 商品规格sku添加
+      description: add product spec SKU
       responses:
         "200":
           description: OK
@@ -159,7 +159,7 @@ paths:
             $ref: '#/definitions/app.Response'
   /tree:
     get:
-      description: 菜单树形
+      description: menu tree
       responses:
         "200":
           description: OK
@@ -167,7 +167,7 @@ paths:
             $ref: '#/definitions/app.Response'
   /updateAvatar:
     post:
-      description: 用户上传图像
+      description: upload user avatar
       responses:
         "200":
           description: OK
@@ -175,7 +175,7 @@ paths:
             $ref: '#/definitions/app.Response'
   /updatePass:
     post:
-      description: 用户修改密码
+      description: change user password
       responses:
         "200":
           description: OK

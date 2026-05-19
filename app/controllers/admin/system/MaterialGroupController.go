@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package system
 
@@ -16,12 +16,12 @@ import (
 	"yixiang.co/go-mall/pkg/jwt"
 )
 
-// 素材分组api
+// material group API
 type MaterialGroupController struct {
 }
 
-// @Title 素材分组列表
-// @Description 素材分组列表
+// @Title material group list
+// @Description material group list
 // @Success 200 {object} app.Response
 // @router / [get]
 func (e *MaterialGroupController) GetAll(c *gin.Context) {
@@ -36,8 +36,8 @@ func (e *MaterialGroupController) GetAll(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, vo)
 }
 
-// @Title素材分组添加
-// @Description素材分组添加
+// @Titleadd material group
+// @Descriptionadd material group
 // @Success 200 {object} app.Response
 // @router / [post]
 func (e *MaterialGroupController) Post(c *gin.Context) {
@@ -65,8 +65,8 @@ func (e *MaterialGroupController) Post(c *gin.Context) {
 
 }
 
-// @Title 素材分组修改
-// @Description 素材分组修改
+// @Title update material group
+// @Description update material group
 // @Success 200 {object} app.Response
 // @router / [put]
 func (e *MaterialGroupController) Put(c *gin.Context) {
@@ -93,8 +93,8 @@ func (e *MaterialGroupController) Put(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, nil)
 }
 
-// @Title 素材分组删除
-// @Description 素材分组删除
+// @Title delete material group
+// @Description delete material group
 // @Success 200 {object} app.Response
 // @router /:id [delete]
 func (e *MaterialGroupController) Delete(c *gin.Context) {

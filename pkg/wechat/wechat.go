@@ -9,7 +9,7 @@ import (
 
 func InitWechat() {
 	wc := wechat.NewWechat()
-	//这里本地内存保存access_token，也可选择redis，memcache或者自定cache
+	//store access_token in memory; can use redis，memcache, or custom cache
 	redisOpts := &cache.RedisOpts{
 		Host: global.YSHOP_CONFIG.Redis.Host,
 		Password: global.YSHOP_CONFIG.Redis.Password,

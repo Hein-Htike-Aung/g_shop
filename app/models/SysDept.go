@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package models
 
@@ -24,7 +24,7 @@ func GetAllDepts(maps interface{}) []SysDept {
 	return RecursionDeptList(depts,0)
 }
 
-//递归函数
+// recursive helper
 func RecursionDeptList(data []SysDept, pid int64) []SysDept {
 	var listTree = make([]SysDept,0)
 	for _, value := range data {

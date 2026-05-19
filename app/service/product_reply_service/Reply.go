@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package product_reply_service
 
@@ -37,7 +37,7 @@ type Reply struct {
 //func (d *Relation) AddRelation() error {
 //	//productId := com.StrTo(d.Param.Id).MustInt64()
 //	if IsRelation(d.Param.Id,d.Uid) {
-//		return errors.New("已经收藏过")
+//		return errors.New("already favorited")
 //	}
 //	model := &models.YshopStoreProductRelation{
 //		Uid: d.Uid,
@@ -50,7 +50,7 @@ type Reply struct {
 ////del collect
 //func (d *Relation) DelRelation() error {
 //	if !IsRelation(d.Param.Id,d.Uid) {
-//		return errors.New("已经取消过")
+//		return errors.New("already unfavorited")
 //	}
 //	err := global.YSHOP_DB.
 //		Where("uid = ?",d.Uid).
@@ -59,12 +59,12 @@ type Reply struct {
 //		Delete(&models.YshopStoreProductRelation{}).Error
 //	if err != nil {
 //		global.YSHOP_LOG.Error(err)
-//		return errors.New("取消失败")
+//		return errors.New("cancellation failed")
 //	}
 //	return nil
 //}
 
-////是否收藏
+//// is favorited
 //func IsRelation(productId,uid int64) bool  {
 //	var (
 //		count int64
@@ -86,7 +86,7 @@ type Reply struct {
 //	return true
 //}
 
-//评论列表
+// review list
 func (d *Reply) GetList() ([]vo2.ProductReply,int,int) {
 	maps := make(map[string]interface{})
 	if d.Name != "" {

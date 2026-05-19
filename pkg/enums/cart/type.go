@@ -1,8 +1,8 @@
 package cart
 
 const (
-	//加入购物车
+	// add to cart
 	NEW_O = iota
-	//加入购物车直接购买
+	// buy now (add to cart and checkout)
 	NEW_1
 )

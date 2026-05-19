@@ -16,13 +16,13 @@ func Viper(path ...string) *viper.Viper {
 		flag.Parse()
 		if config == "" {
 			config = "config.yaml"
-			//fmt.Printf("使用默认值，config的路径为%v\n", config)
+			//fmt.Printf("use default value，config path: %v\n", config)
 		} else {
-			//fmt.Printf("使用-c传递的值，config的路径为%v\n", config)
+			//fmt.Printf("use -c config path，config path: %v\n", config)
 		}
 	} else {
 		config = path[0]
-		//fmt.Printf("使用传递单值，config的路径为%v\n", config)
+		//fmt.Printf("use passed config path，config path: %v\n", config)
 	}
 
 	v := viper.New()

@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package weixin
 
@@ -16,12 +16,12 @@ import (
 	"yixiang.co/go-mall/pkg/util"
 )
 
-// 微信用户 API
+// WeChat user API
 type WechatUserController struct {
 }
 
-// @Title 用户列表
-// @Description 用户列表
+// @Title user list
+// @Description user list
 // @Success 200 {object} app.Response
 // @router / [get]
 func (e *WechatUserController) GetAll(c *gin.Context) {
@@ -44,8 +44,8 @@ func (e *WechatUserController) GetAll(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, vo)
 }
 
-// @Title 用户编辑
-// @Description 用户编辑
+// @Title update user
+// @Description update user
 // @Success 200 {object} app.Response
 // @router / [put]
 func (e *WechatUserController) Put(c *gin.Context) {
@@ -70,8 +70,8 @@ func (e *WechatUserController) Put(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, nil)
 }
 
-// @Title 用户余额修改
-// @Description 用户余额修改
+// @Title update user balance
+// @Description update user balance
 // @Success 200 {object} app.Response
 // @router / [post]
 func (e *WechatUserController) Money(c *gin.Context) {

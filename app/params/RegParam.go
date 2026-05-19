@@ -11,15 +11,15 @@ type RegParam struct {
 
 func (p *RegParam) Valid(v *validation.Validation)  {
 	if vv := v.Phone(p.Account,"yshop-warning"); !vv.Ok {
-		vv.Message("手机格式不对")
+		vv.Message("invalid phone number format")
 		return
 	}
 	if vv := v.Required(p.Captcha,"yshop-warning"); !vv.Ok {
-		vv.Message("验证码必填")
+		vv.Message("verification code is required")
 		return
 	}
 	if vv := v.Required(p.Password,"yshop-warning"); !vv.Ok {
-		vv.Message("密码必填")
+		vv.Message("password is required")
 		return
 	}
 

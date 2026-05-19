@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package system
 
@@ -15,12 +15,12 @@ import (
 	"yixiang.co/go-mall/pkg/constant"
 )
 
-// 部门api
+// department API
 type DeptController struct {
 }
 
-// @Title 获取部门列表
-// @Description 获取部门列表
+// @Title department list
+// @Description department list
 // @Success 200 {object} app.Response
 // @router / [get]
 func (e *DeptController) GetAll(c *gin.Context) {
@@ -34,8 +34,8 @@ func (e *DeptController) GetAll(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, vo)
 }
 
-// @Title 添加部门
-// @Description 添加部门
+// @Title add department
+// @Description add department
 // @Success 200 {object} app.Response
 // @router / [post]
 func (e *DeptController) Post(c *gin.Context) {
@@ -60,8 +60,8 @@ func (e *DeptController) Post(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, nil)
 }
 
-// @Title 修改部门
-// @Description 修改部门
+// @Title update department
+// @Description update department
 // @Success 200 {object} app.Response
 // @router / [put]
 func (e *DeptController) Put(c *gin.Context) {
@@ -85,8 +85,8 @@ func (e *DeptController) Put(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, nil)
 }
 
-// @Title 删除部门
-// @Description 删除部门
+// @Title delete department
+// @Description delete department
 // @Success 200 {object} app.Response
 // @router / [delete]
 func (e *DeptController) Delete(c *gin.Context) {

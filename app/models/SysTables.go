@@ -1,19 +1,19 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package models
 
 type SysTables struct {
-	TBName          string       `gorm:"column:table_name" json:"tableName"` //表名称
+	TBName          string       `gorm:"column:table_name" json:"tableName"` // table name
 	MLTBName        string       `gorm:"-" json:"-"`
-	TableComment    string       `json:"tableComment"`    //表备注
-	ClassName       string       `json:"className"`       //类名
+	TableComment    string       `json:"tableComment"`    // table comment
+	ClassName       string       `json:"className"`       // class name
 	TplCategory     string       `json:"tplCategory"`     //
-	PackageName     string       `json:"packageName"`     //包名
-	ModuleName      string       `json:"moduleName"`      //go文件名
-	ModuleFrontName string       `json:"moduleFrontName"` //前端文件名
+	PackageName     string       `json:"packageName"`     // package name
+	ModuleName      string       `json:"moduleName"`      // Go module file name
+	ModuleFrontName string       `json:"moduleFrontName"` // frontend file name
 	BusinessName    string       `json:"businessName"`    //
 	FunctionName    string       `json:"functionName"`
 	FunctionAuthor  string       `json:"functionAuthor"`

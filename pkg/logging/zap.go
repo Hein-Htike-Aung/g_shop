@@ -28,12 +28,12 @@ func SetupLogger() *zap.SugaredLogger {
 // get logger
 func getInitLogger(filepath, infofilename, warnfilename, fileext string) (*zap.SugaredLogger, error) {
 	encoder := getEncoder()
-	//两个判断日志等级的interface
-	//warnlevel以下属于info
+	//log level filter interfaces
+	//below warn => info
 	infoLevel := zap.LevelEnablerFunc(func(lvl zapcore.Level) bool {
 		return lvl < zapcore.WarnLevel
 	})
-	//warnlevel及以上属于warn
+	//warn and above => warn
 	warnLevel := zap.LevelEnablerFunc(func(lvl zapcore.Level) bool {
 		return lvl >= zapcore.WarnLevel
 	})
@@ -47,7 +47,7 @@ func getInitLogger(filepath, infofilename, warnfilename, fileext string) (*zap.S
 		return nil, err2
 	}
 
-	//创建具体的Logger
+	//create logger instance
 	core := zapcore.NewTee(
 		zapcore.NewCore(encoder, infoWriter, infoLevel),
 		zapcore.NewCore(encoder, warnWriter, warnLevel),
@@ -117,9 +117,9 @@ func getLogWriter(filePath, fileext string) (zapcore.WriteSyncer, error) {
 	return zapcore.AddSync(warnIoWriter), nil
 }
 
-// 日志文件切割，按天
+// rotate log files daily
 func getWriter(filename, fileext string) (io.Writer, error) {
-	// 保存30天内的日志，每24小时(整点)分割一次日志
+	// retain 30 days, rotate every 24h
 	hook, err := rotatelogs.New(
 		filename+"_%Y%m%d."+fileext,
 		rotatelogs.WithLinkName(filename),

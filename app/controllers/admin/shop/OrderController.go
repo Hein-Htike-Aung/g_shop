@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package shop
 
@@ -25,8 +25,8 @@ import (
 type OrderController struct {
 }
 
-// @Title 订单列表
-// @Description 订单列表
+// @Title order list
+// @Description order list
 // @Success 200 {object} app.Response
 // @router / [get]
 func (e *OrderController) GetAll(c *gin.Context) {
@@ -46,8 +46,8 @@ func (e *OrderController) GetAll(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, vo)
 }
 
-// @Title 文章添加
-// @Description 文章添加
+// @Title add article
+// @Description add article
 // @Success 200 {object} app.Response
 // @router / [post]
 func (e *OrderController) Post(c *gin.Context) {
@@ -75,8 +75,8 @@ func (e *OrderController) Post(c *gin.Context) {
 
 }
 
-// @Title 订单修改
-// @Description 订单修改
+// @Title update order
+// @Description update order
 // @Success 200 {object} app.Response
 // @router / [put]
 func (e *OrderController) Put(c *gin.Context) {
@@ -101,8 +101,8 @@ func (e *OrderController) Put(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, nil)
 }
 
-// @Title 订单发货
-// @Description 订单发货
+// @Title ship order
+// @Description ship order
 // @Success 200 {object} app.Response
 // @router / [put]
 func (e *OrderController) Deliver(c *gin.Context) {
@@ -128,8 +128,8 @@ func (e *OrderController) Deliver(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, nil)
 }
 
-// @Title 订单快递查询
-// @Description 订单快递查询
+// @Title track shipment
+// @Description track shipment
 // @Success 200 {object} app.Response
 // @router / [post]
 func (e *OrderController) DeliverQuery(c *gin.Context) {
@@ -162,8 +162,8 @@ func (e *OrderController) DeliverQuery(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, resp.Traces)
 }
 
-// @Title 订单删除
-// @Description 订单删除
+// @Title delete order
+// @Description delete order
 // @Success 200 {object} app.Response
 // @router /:id [delete]
 func (e *OrderController) Delete(c *gin.Context) {

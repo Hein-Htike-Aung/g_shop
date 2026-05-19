@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package params
 
@@ -23,15 +23,15 @@ type ProductParam struct {
 
 func (p *AfterSalesParan) Valid(v *validation.Validation)  {
 	if vv := v.Required(p.OrderCode,"yshop-warning"); !vv.Ok {
-		vv.Message("单号错误")
+		vv.Message("invalid order number")
 		return
 	}
 	if vv := v.Required(p.ServiceType,"yshop-warning"); !vv.Ok {
-		vv.Message("请选择服务类型")
+		vv.Message("please select service type")
 		return
 	}
 	if vv := v.Required(p.ProductParamList,"yshop-warning"); !vv.Ok {
-		vv.Message("请选择要退货的商品")
+		vv.Message("please select items to return")
 		return
 	}
 }

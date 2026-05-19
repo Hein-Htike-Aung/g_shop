@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package cate_service
 
@@ -22,7 +22,7 @@ type Cate struct {
 }
 
 
-//返回一定格式的分类数据
+// formatted category tree
 func (d *Cate) GetProductCate() []map[string]interface{} {
 	var (
 		retList []map[string]interface{}

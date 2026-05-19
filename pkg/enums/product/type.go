@@ -1,8 +1,8 @@
 package product
 
 const (
-	//单规格
+	// single spec
 	SEPC_TYPE_0 = iota
-	//多规格
+	// multi spec
 	SEPC_TYPE_1
 )

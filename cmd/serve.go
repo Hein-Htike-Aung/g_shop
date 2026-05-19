@@ -34,7 +34,7 @@ func runweb(cmd *cobra.Command, args []string) {
 	}
 
 	global.YSHOP_LOG.Info("[info] start http server listening %s", endPoint)
-	fmt.Printf("欢迎使用yshop-gin,官网地址：https://www.yixiang.co\n")
+	fmt.Printf("Welcome to yshop-gin — https://www.yixiang.co\n")
 
 	err := server.ListenAndServe()
 	if err != nil {

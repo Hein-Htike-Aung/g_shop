@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package system
 
@@ -16,12 +16,12 @@ import (
 	"yixiang.co/go-mall/pkg/util"
 )
 
-// 岗位api
+// job API
 type JobController struct {
 }
 
-// @Title 岗位列表
-// @Description 岗位列表
+// @Title job list
+// @Description job list
 // @Success 200 {object} app.Response
 // @router / [get]
 func (e *JobController) GetAll(c *gin.Context) {
@@ -40,8 +40,8 @@ func (e *JobController) GetAll(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, vo)
 }
 
-// @Title 岗位添加
-// @Description 岗位添加
+// @Title add job
+// @Description add job
 // @Success 200 {object} app.Response
 // @router / [post]
 func (e *JobController) Post(c *gin.Context) {
@@ -67,8 +67,8 @@ func (e *JobController) Post(c *gin.Context) {
 
 }
 
-// @Title 岗位修改
-// @Description 岗位修改
+// @Title update job
+// @Description update job
 // @Success 200 {object} app.Response
 // @router / [put]
 func (e *JobController) Put(c *gin.Context) {
@@ -93,8 +93,8 @@ func (e *JobController) Put(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, nil)
 }
 
-// @Title 岗位删除
-// @Description 岗位删除
+// @Title delete job
+// @Description delete job
 // @Success 200 {object} app.Response
 // @router / [delete]
 func (e *JobController) Delete(c *gin.Context) {

@@ -9,34 +9,34 @@ import (
 	"github.com/redis/go-redis/v9"
 )
 
-// RedisClient Redis 服务
+// RedisClient Redis service
 type RedisClient struct {
 	Client  *redis.Client
 	Context context.Context
 }
 
-// once 确保全局的 Redis 对象只实例一次
+// once ensure Redis client is a singleton
 var once sync.Once
 
-// Redis 全局 Redis，使用 db 1
+// Redis global Redis client using DB 1
 var Redis *RedisClient
 
-// ConnectRedis 连接 redis 数据库，设置全局的 Redis 对象
+// ConnectRedis connect to Redis and set global client
 func ConnectRedis(address string, username string, password string, db int) {
 	once.Do(func() {
 		Redis = NewClient(address, username, password, db)
 	})
 }
 
-// NewClient 创建一个新的 redis 连接
+// NewClient create a new Redis client
 func NewClient(address string, password string, username string, db int) *RedisClient {
 
-	// 初始化自定的 RedisClient 实例
+	// initialize custom RedisClient
 	rds := &RedisClient{}
-	// 使用默认的 context
+	// use default context
 	rds.Context = context.Background()
 
-	// 使用 redis 库里的 NewClient 初始化连接
+	// initialize with redis.NewClient
 	rds.Client = redis.NewClient(&redis.Options{
 		Addr:     address,
 		Username: username,
@@ -44,20 +44,20 @@ func NewClient(address string, password string, username string, db int) *RedisC
 		DB:       db,
 	})
 
-	// 测试一下连接
+	// ping connection
 	err := rds.Ping()
 	global.YSHOP_LOG.Error(err)
 
 	return rds
 }
 
-// Ping 用以测试 redis 连接是否正常
+// Ping ping Redis to verify connection
 func (rds RedisClient) Ping() error {
 	_, err := rds.Client.Ping(rds.Context).Result()
 	return err
 }
 
-// Set 存储 key 对应的 value，且设置 expiration 过期时间
+// Set set key with expiration
 func (rds RedisClient) Set(key string, value interface{}, expiration time.Duration) bool {
 	if err := rds.Client.Set(rds.Context, key, value, expiration).Err(); err != nil {
 		global.YSHOP_LOG.Error(err.Error())
@@ -66,7 +66,7 @@ func (rds RedisClient) Set(key string, value interface{}, expiration time.Durati
 	return true
 }
 
-// Get 获取 key 对应的 value
+// Get get value by key
 func (rds RedisClient) Get(key string) string {
 	result, err := rds.Client.Get(rds.Context, key).Result()
 	if err != nil {
@@ -78,7 +78,7 @@ func (rds RedisClient) Get(key string) string {
 	return result
 }
 
-// Has 判断一个 key 是否存在，内部错误和 redis.Nil 都返回 false
+// Has key exists; errors and redis.Nil return false
 func (rds RedisClient) Has(key string) bool {
 	_, err := rds.Client.Get(rds.Context, key).Result()
 	if err != nil {
@@ -90,7 +90,7 @@ func (rds RedisClient) Has(key string) bool {
 	return true
 }
 
-// Del 删除存储在 redis 里的数据，支持多个 key 传参
+// Del delete one or more keys
 func (rds RedisClient) Del(keys ...string) bool {
 	if err := rds.Client.Del(rds.Context, keys...).Err(); err != nil {
 		global.YSHOP_LOG.Error(err.Error())
@@ -99,7 +99,7 @@ func (rds RedisClient) Del(keys ...string) bool {
 	return true
 }
 
-// FlushDB 清空当前 redis db 里的所有数据
+// FlushDB flush current Redis DB
 func (rds RedisClient) FlushDB(keys ...string) bool {
 	if err := rds.Client.FlushDB(rds.Context).Err(); err != nil {
 		global.YSHOP_LOG.Error(err.Error())
@@ -108,8 +108,8 @@ func (rds RedisClient) FlushDB(keys ...string) bool {
 	return true
 }
 
-// Increment 当参数只有 1 个时，为 key，其值增加 1。
-// 当参数有 2 个时，第一个参数为 key ，第二个参数为要增加的值 int64 类型。
+// Increment one arg: increment key by 1.
+// two args: key and int64 increment amount.
 func (rds RedisClient) Increment(parameters ...interface{}) bool {
 	switch len(parameters) {
 	case 1:
@@ -126,14 +126,14 @@ func (rds RedisClient) Increment(parameters ...interface{}) bool {
 			return false
 		}
 	default:
-		global.YSHOP_LOG.Error("参数过多")
+		global.YSHOP_LOG.Error("too many parameters")
 		return false
 	}
 	return true
 }
 
-// Decrement 当参数只有 1 个时，为 key，其值减去 1。
-// 当参数有 2 个时，第一个参数为 key ，第二个参数为要减去的值 int64 类型。
+// Decrement one arg: decrement key by 1.
+// two args: key and int64 decrement amount.
 func (rds RedisClient) Decrement(parameters ...interface{}) bool {
 	switch len(parameters) {
 	case 1:
@@ -150,7 +150,7 @@ func (rds RedisClient) Decrement(parameters ...interface{}) bool {
 			return false
 		}
 	default:
-		global.YSHOP_LOG.Error("参数过多")
+		global.YSHOP_LOG.Error("too many parameters")
 		return false
 	}
 	return true

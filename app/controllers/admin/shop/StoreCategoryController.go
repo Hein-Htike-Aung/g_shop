@@ -10,12 +10,12 @@ import (
 	"yixiang.co/go-mall/pkg/constant"
 )
 
-// 商品分类api
+// product category API
 type StoreCategoryController struct {
 }
 
-// @Title 商品分类列表
-// @Description 商品分类列表
+// @Title category list
+// @Description category list
 // @Success 200 {object} app.Response
 // @router / [get]
 func (e *StoreCategoryController) GetAll(c *gin.Context) {
@@ -29,8 +29,8 @@ func (e *StoreCategoryController) GetAll(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, vo)
 }
 
-// @Title 添加商品分类
-// @Description 添加商品分类
+// @Title add category
+// @Description add category
 // @Success 200 {object} app.Response
 // @router / [post]
 func (e *StoreCategoryController) Post(c *gin.Context) {
@@ -55,8 +55,8 @@ func (e *StoreCategoryController) Post(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, nil)
 }
 
-// @Title 修改商品分类
-// @Description 修改商品分类
+// @Title update category
+// @Description update category
 // @Success 200 {object} app.Response
 // @router / [put]
 func (e *StoreCategoryController) Put(c *gin.Context) {
@@ -81,8 +81,8 @@ func (e *StoreCategoryController) Put(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, nil)
 }
 
-// @Title 删除商品分类
-// @Description 删除商品分类
+// @Title delete category
+// @Description delete category
 // @Success 200 {object} app.Response
 // @router / [delete]
 func (e *StoreCategoryController) Delete(c *gin.Context) {

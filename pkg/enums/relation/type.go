@@ -1,10 +1,10 @@
 package relation
 
 const  (
-	//收藏
+	// favorite
 	COLLECT = "collect"
-	//点赞
+	// like
 	LIKE = "like"
-	//足迹
+	// footprint
 	FOOT = "foot"
 )

@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package pay_service
 
@@ -25,7 +25,7 @@ import (
 
 type Pay struct {}
 
-//开始支付
+// start payment
 func GoPay(returnMap map[string]interface{}, orderId,payType,from string,
 			uid int64 ,dto *orderDto.OrderExtend) (map[string]interface{},error) {
 
@@ -37,7 +37,7 @@ func GoPay(returnMap map[string]interface{}, orderId,payType,from string,
 			if from == "pc" {
 				client := wechat.NewClient("", "", "", true)
 
-				//设置国家
+				// set country
 				client.SetCountry(wechat.China)
 				client.DebugSwitch = gopay.DebugOn
 				orderService := order_service.Order {
@@ -48,7 +48,7 @@ func GoPay(returnMap map[string]interface{}, orderId,payType,from string,
 				//expire := time.Now().Add(10 * time.Minute).Format(time.RFC3339)
 				bm := make(gopay.BodyMap)
 				bm.Set("nonce_str", util.RandomString(32)).
-					Set("body", "yshop-go pc支付").
+					Set("body", "yshop-go PC payment").
 					Set("out_trade_no", orderId).
 					Set("total_fee", orderInfo.PayPrice * 100).
 					Set("spbill_create_ip", "127.0.0.1").
@@ -66,7 +66,7 @@ func GoPay(returnMap map[string]interface{}, orderId,payType,from string,
 
 				jsConfig := gin.H{"codeUrl" : wxRsp.CodeUrl}
 				dto.JsConfig = jsConfig
-				returnMap["payMsg"] = "pc支付成功"
+				returnMap["payMsg"] = "PC payment successful"
 				returnMap["result"] = dto
 
 			}
@@ -76,14 +76,14 @@ func GoPay(returnMap map[string]interface{}, orderId,payType,from string,
 				global.YSHOP_LOG.Error(err)
 				return nil,err
 			}
-			returnMap["payMsg"] = "余额支付成功"
+			returnMap["payMsg"] = "balance payment successful"
 
 	}
 
 	return returnMap,nil
 }
 
-//余额支付
+//balance payment
 func  YuePay(orderId string,uid int64) error  {
 	var err error
 	tx := global.YSHOP_DB.Begin()
@@ -100,7 +100,7 @@ func  YuePay(orderId string,uid int64) error  {
 	}
 	orderInfo,_ := orderService.GetOrderInfo()
 	if orderInfo.Paid == 1 {
-		return errors.New("订单已经支付")
+		return errors.New("order already paid")
 	}
 	userService := wechat_user_service.User{
 		Id: uid,
@@ -108,23 +108,23 @@ func  YuePay(orderId string,uid int64) error  {
 	userInfo := userService.GetUserInfo()
 	global.YSHOP_LOG.Info(userInfo.NowMoney,orderInfo.PayPrice)
 	if userInfo.NowMoney < orderInfo.PayPrice {
-		return errors.New("余额不足")
+		return errors.New("insufficient balance")
 	}
 	err = tx.Exec("update yshop_user set now_money=now_money - ?" +
 		" where id = ?",orderInfo.PayPrice,uid).Error
 	if err != nil {
 		global.YSHOP_LOG.Error(err)
-		return errors.New("余额支付失败-0001")
+		return errors.New("balance payment failed (0001)")
 	}
 	err = PaySuccess(tx,orderInfo.OrderId,"yue")
 	if err != nil {
 		global.YSHOP_LOG.Error(err)
-		return errors.New("余额支付失败-0002")
+		return errors.New("balance payment failed (0002)")
 	}
 	return nil
 }
 
-//支付成功处理
+// handle payment success
 func PaySuccess(tx *gorm.DB,orderId,payType string) error {
 	var err error
 
@@ -133,7 +133,7 @@ func PaySuccess(tx *gorm.DB,orderId,payType string) error {
 	}
 	orderInfo,_ := orderService.GetOrderInfo()
 
-	//修改订单状态
+	// update order status
 	updateOrder := &models.YshopStoreOrder{
 		Paid: orderEnum.PAY_STATUS_1,
 		PayType: payType,
@@ -146,15 +146,15 @@ func PaySuccess(tx *gorm.DB,orderId,payType string) error {
 		return err
 	}
 
-	//增加用户购买次数
+	// increment user purchase count
 	err = tx.Exec("update yshop_user set pay_count = pay_count + 1" +
 		" where id = ?",orderInfo.Uid).Error
 	if err != nil {
 		global.YSHOP_LOG.Error(err)
 		return err
 	}
-	//增加状态
-	err = models.AddStoreOrderStatus(tx,orderInfo.Id,"pay_success","用户付款成功")
+	// add order status log
+	err = models.AddStoreOrderStatus(tx,orderInfo.Id,"pay_success","user payment successful")
 	if err != nil {
 		global.YSHOP_LOG.Error(err)
 		return err
@@ -162,14 +162,14 @@ func PaySuccess(tx *gorm.DB,orderId,payType string) error {
 
 	userServie := wechat_user_service.User{Id: orderInfo.Uid}
 	userInfo := userServie.GetUserInfo()
-	payTypeMsg := "微信支付"
+	payTypeMsg := "WeChat Pay"
 	if payType == "yue" {
-		payTypeMsg = "余额支付"
+		payTypeMsg = "balance payment"
 	}
 
 
-	mark := payTypeMsg + com.ToStr(orderInfo.PayPrice) + "元购买商品"
-	err = models.Expend(tx,orderInfo.Uid,"购买商品","now_money","pay_product",
+	mark := payTypeMsg + com.ToStr(orderInfo.PayPrice) + " CNY for product purchase"
+	err = models.Expend(tx,orderInfo.Uid,"purchase product","now_money","pay_product",
 		mark,com.ToStr(orderInfo.Id),orderInfo.PayPrice,userInfo.NowMoney)
 	if err != nil {
 		global.YSHOP_LOG.Error(err)
@@ -177,6 +177,6 @@ func PaySuccess(tx *gorm.DB,orderId,payType string) error {
 	}
 
 	return nil
-	//todo 消息通知
+	// TODO: notification
 }
 

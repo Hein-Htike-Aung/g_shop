@@ -11,12 +11,12 @@ import (
 	"yixiang.co/go-mall/pkg/util"
 )
 
-// 商品规格sku api
+// product spec SKU api
 type StoreProductRuleController struct {
 }
 
-// @Title 商品规格sku列表
-// @Description 商品规格sku列表
+// @Title product spec SKU list
+// @Description product spec SKU list
 // @Success 200 {object} app.Response
 // @router / [get]
 func (e *StoreProductRuleController) GetAll(c *gin.Context) {
@@ -35,8 +35,8 @@ func (e *StoreProductRuleController) GetAll(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, vo)
 }
 
-// @Title 商品规格sku添加
-// @Description 商品规格sku添加
+// @Title add product spec SKU
+// @Description add product spec SKU
 // @Success 200 {object} app.Response
 // @router /save/:id [post]
 func (e *StoreProductRuleController) Post(c *gin.Context) {
@@ -64,8 +64,8 @@ func (e *StoreProductRuleController) Post(c *gin.Context) {
 
 }
 
-// @Title 商品规格sku删除
-// @Description 商品规格sku删除
+// @Title delete product spec SKU
+// @Description delete product spec SKU
 // @Success 200 {object} app.Response
 // @router / [delete]
 func (e *StoreProductRuleController) Delete(c *gin.Context) {

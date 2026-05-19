@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package system
 
@@ -16,12 +16,12 @@ import (
 	"yixiang.co/go-mall/pkg/util"
 )
 
-// 字典api
+// dictionary API
 type DictController struct {
 }
 
-// @Title 获取字典列表
-// @Description 获取字典列表
+// @Title dictionary list
+// @Description dictionary list
 // @Success 200 {object} app.Response
 // @router / [get]
 func (e *DictController) GetAll(c *gin.Context) {
@@ -40,8 +40,8 @@ func (e *DictController) GetAll(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, vo)
 }
 
-// @Title 添加字典
-// @Description 添加字典
+// @Title add dictionary
+// @Description add dictionary
 // @Success 200 {object} app.Response
 // @router / [post]
 func (e *DictController) Post(c *gin.Context) {
@@ -66,8 +66,8 @@ func (e *DictController) Post(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, nil)
 }
 
-// @Title 修改字典
-// @Description 修改字典
+// @Title update dictionary
+// @Description update dictionary
 // @Success 200 {object} app.Response
 // @router / [put]
 func (e *DictController) Put(c *gin.Context) {
@@ -92,8 +92,8 @@ func (e *DictController) Put(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, nil)
 }
 
-// @Title 删除字典
-// @Description 删除字典
+// @Title delete dictionary
+// @Description delete dictionary
 // @Success 200 {object} app.Response
 // @router /:id [delete]
 func (e *DictController) Delete(c *gin.Context) {

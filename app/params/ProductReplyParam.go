@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package params
 
@@ -21,7 +21,7 @@ type ProductReplyParam struct {
 
 func (p *ProductReplyParam) Valid(v *validation.Validation)  {
 	if vv := v.Required(p.Comment,"yshop-warning"); !vv.Ok {
-		vv.Message("请填写评价内容")
+		vv.Message("please enter review content")
 		return
 	}
 }

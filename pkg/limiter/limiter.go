@@ -10,20 +10,20 @@ import (
 	sredis "github.com/ulule/limiter/v3/drivers/store/redis"
 )
 
-// GetKeyIP 获取 Limitor 的 Key，IP
+// GetKeyIP rate limiter key: IP
 func GetKeyIP(c *gin.Context) string {
 	return c.ClientIP()
 }
 
-// GetKeyRouteWithIP Limitor 的 Key，路由+IP，针对单个路由做限流
+// GetKeyRouteWithIP rate limiter key: route+IP
 func GetKeyRouteWithIP(c *gin.Context) string {
 	return routeToKeyString(c.FullPath()) + c.ClientIP()
 }
 
-// CheckRate 检测请求是否超额
+// CheckRate check if rate limit exceeded
 func CheckRate(c *gin.Context, key string, formatted string) (limiterlib.Context, error) {
 
-	// 实例化依赖的 limiter 包的 limiter.Rate 对象
+	// create limiter.Rate
 	var context limiterlib.Context
 	rate, err := limiterlib.NewRateFromFormatted(formatted)
 	if err != nil {
@@ -33,9 +33,9 @@ func CheckRate(c *gin.Context, key string, formatted string) (limiterlib.Context
 
 	//v8.Redis.Client
 
-	// 初始化存储，使用我们程序里共用的 redis.Redis 对象
+	// init store with app Redis
 	store, err := sredis.NewStoreWithOptions(v9.Redis.Client, limiterlib.StoreOptions{
-		// 为 limiter 设置前缀，保持 redis 里数据的整洁
+		// key prefix for tidy Redis keys
 		Prefix: "yshop:limiter",
 	})
 	if err != nil {
@@ -43,14 +43,14 @@ func CheckRate(c *gin.Context, key string, formatted string) (limiterlib.Context
 		return context, err
 	}
 
-	// 使用上面的初始化的 limiter.Rate 对象和存储对象
+	// build limiter with rate and store
 	limiterObj := limiterlib.New(store, rate)
 
-	// 获取限流的结果
+	// get rate limit result
 	return limiterObj.Get(c, key)
 }
 
-// routeToKeyString 辅助方法，将 URL 中的 / 格式为 -
+// routeToKeyString format URL slashes as dashes
 func routeToKeyString(routeName string) string {
 	routeName = strings.ReplaceAll(routeName, "/", "-")
 	routeName = strings.ReplaceAll(routeName, ":", "_")

@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
 */
 package admin
 
@@ -21,7 +21,7 @@ import (
 	"yixiang.co/go-mall/pkg/util"
 )
 
-// 登录api
+// loginapi
 type LoginController struct {
 }
 
@@ -31,12 +31,12 @@ type CaptchaResult struct {
 	VerifyValue string `json:"code"`
 }
 
-// 设置自带的store
+// set default store
 var store = base64Captcha.DefaultMemStore
 
 
-// @Title 登录
-// @Description 登录
+// @Title login
+// @Description login
 // @Success 200 {object} app.Response
 // @router /admin/login [post]
 func (e *LoginController) Login(c *gin.Context) {
@@ -63,7 +63,7 @@ func (e *LoginController) Login(c *gin.Context) {
 		return
 	}
 
-	//校验验证码
+	// verify captcha
 	if !store.Verify(authUser.Id, authUser.Code, true) {
 		appG.Response(http.StatusInternalServerError,constant.ERROR_CAPTCHA_USER,nil)
 		return
@@ -80,8 +80,8 @@ func (e *LoginController) Login(c *gin.Context) {
 
 }
 
-// @Title 获取用户信息
-// @Description 获取用户信息
+// @Title get user info
+// @Description get user info
 // @Success 200 {object} app.Response
 // @router /info [get]
 func (e *LoginController) Info(c *gin.Context) {
@@ -91,8 +91,8 @@ func (e *LoginController) Info(c *gin.Context) {
 	appG.Response(http.StatusOK,constant.SUCCESS, jwt.GetAdminDetailUser(c))
 }
 
-// @Title 退出登录
-// @Description 退出登录
+// @Title logout
+// @Description logout
 // @Success 200 {object} app.Response
 // @router /logout [delete]
 func (e *LoginController) Logout(c *gin.Context) {
@@ -108,14 +108,14 @@ func (e *LoginController) Logout(c *gin.Context) {
 	appG.Response(http.StatusOK,constant.SUCCESS,nil)
 }
 
-// @Title 获取验证码
-// @Description 获取验证码
+// @Title get captcha
+// @Description get captcha
 // @router /captcha [get]
 func (e *LoginController) Captcha(c *gin.Context) {
 	GenerateCaptcha(c)
 }
 
-// 生成图形化验证码  ctx *context.Context
+// generate captcha image  ctx *context.Context
 func GenerateCaptcha(c *gin.Context) {
 	var (
 		appG = app.Gin{C: c}
@@ -123,7 +123,7 @@ func GenerateCaptcha(c *gin.Context) {
 		driverString base64Captcha.DriverMath
 	)
 
-	// 配置验证码信息
+	// captcha config
 	captchaConfig := base64Captcha.DriverMath{
 		Height:          38,
 		Width:           110,
@@ -138,7 +138,7 @@ func GenerateCaptcha(c *gin.Context) {
 		Fonts: []string{"wqy-microhei.ttc"},
 	}
 
-	// 自定义配置，如果不需要自定义配置，则上面的结构体和下面这行代码不用写
+	// custom config; omit struct and line below if defaults are fine
 	driverString = captchaConfig
 	driver = driverString.ConvertFonts()
 

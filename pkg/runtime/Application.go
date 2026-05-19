@@ -22,7 +22,7 @@ func (e *Application) GetCasbin() map[string]*casbin.SyncedEnforcer {
 	return e.casbins
 }
 
-// GetCasbinKey 根据key获取casbin
+// GetCasbinKey get casbin by key
 func (e *Application) GetCasbinKey(key string) *casbin.SyncedEnforcer {
 	e.mux.Lock()
 	defer e.mux.Unlock()
@@ -32,21 +32,21 @@ func (e *Application) GetCasbinKey(key string) *casbin.SyncedEnforcer {
 	return e.casbins[key]
 }
 
-// SetCrontab 设置对应key的crontab
+// SetCrontab set crontab for key
 func (e *Application) SetCrontab(key string, crontab *cron.Cron) {
 	e.mux.Lock()
 	defer e.mux.Unlock()
 	e.crontab[key] = crontab
 }
 
-// GetCrontab 获取所有map里的crontab数据
+// GetCrontab get all crontab entries from map
 func (e *Application) GetCrontab() map[string]*cron.Cron {
 	e.mux.Lock()
 	defer e.mux.Unlock()
 	return e.crontab
 }
 
-// GetCrontabKey 根据key获取crontab
+// GetCrontabKey get crontab by key
 func (e *Application) GetCrontabKey(key string) *cron.Cron {
 	e.mux.Lock()
 	defer e.mux.Unlock()
@@ -56,7 +56,7 @@ func (e *Application) GetCrontabKey(key string) *cron.Cron {
 	return e.crontab[key]
 }
 
-// 获取默认实例
+// get default instance
 func GetInstance() *Application {
 	return &Application{
 		casbins: make(map[string]*casbin.SyncedEnforcer),

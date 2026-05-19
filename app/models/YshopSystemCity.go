@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package models
 
@@ -29,7 +29,7 @@ func GetAllSystemCity(maps interface{}) []YshopSystemCity {
 	return RecursionCityList(data,0)
 }
 
-//递归函数
+// recursive helper
 func RecursionCityList(data []YshopSystemCity, pid int64) []YshopSystemCity {
 	var listTree = make([]YshopSystemCity,0)
 	for _, value := range data {

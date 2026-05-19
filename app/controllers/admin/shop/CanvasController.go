@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package shop
 
@@ -15,12 +15,12 @@ import (
 	"yixiang.co/go-mall/pkg/constant"
 )
 
-// 画布api
+// canvasapi
 type CanvasController struct {
 }
 
-// @Title 画布
-// @Description 画布
+// @Title canvas
+// @Description canvas
 // @Success 200 {object} app.Response
 // @router / [get]
 func (e *CanvasController) Get(c *gin.Context) {
@@ -35,8 +35,8 @@ func (e *CanvasController) Get(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, vo)
 }
 
-// @Title 画布添加/修改
-// @Description 画布添加/修改
+// @Title add or update canvas
+// @Description add or update canvas
 // @Success 200 {object} app.Response
 // @router / [post]
 func (e *CanvasController) Post(c *gin.Context) {

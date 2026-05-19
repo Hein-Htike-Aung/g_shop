@@ -9,16 +9,16 @@ import (
 	"yixiang.co/go-mall/pkg/redis"
 )
 
-// 这里添加自定义任务
+// add custom cron tasks here
 func init() {
 	AddTask("TestCronFun", TestCronFun)
 	AddTask("TestCronFun2", TestCronFun2)
 
 }
 
-// 无参数测试
+// test with no parameters
 func TestCronFun() {
-	fmt.Println("无参测试")
+	fmt.Println("test with no parameters")
 }
 
 type taskDemo struct {
@@ -26,25 +26,25 @@ type taskDemo struct {
 	Age  int64  `json:"age"`
 }
 
-// 有参的测试
+// test with parameters
 func TestCronFun2() {
 	cache := GetCacheParam("TestCronFun2")
 	if cache == "" {
-		fmt.Println("参数没有添加")
+		fmt.Println("parameters not provided")
 	} else {
 		t := new(taskDemo)
 		fmt.Println(cache)
 		err := json.Unmarshal([]byte(cache), t)
 		if err != nil {
-			fmt.Println("参数有误")
+			fmt.Println("invalid parameters")
 		}
-		fmt.Print("有参数测试：")
+		fmt.Print("test with parameters: ")
 		fmt.Println(t)
 	}
 
 }
 
-// 缓存
+// cache
 func GetCacheParam(str string) string {
 	var job models.SysCronJob
 	key := constant.CRON_KEY + str

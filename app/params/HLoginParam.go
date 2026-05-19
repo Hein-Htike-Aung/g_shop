@@ -12,6 +12,6 @@ type HLoginParam struct {
 
 func (p *HLoginParam) Valid(v *validation.Validation)  {
 	if vv := v.Phone(p.Username,"yshop-warning"); !vv.Ok {
-		vv.Message("手机格式不对")
+		vv.Message("invalid phone number format")
 	}
 }

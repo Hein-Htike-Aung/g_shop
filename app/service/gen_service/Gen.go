@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package gen_service
 
@@ -37,7 +37,7 @@ type Gen struct {
 	TableId int64
 }
 
-// 获取所有表
+// list all tables
 func (d *Gen) GetDBTablesAll() vo.ResultList {
 	maps := make(map[string]interface{})
 	if d.Name != "" {
@@ -48,7 +48,7 @@ func (d *Gen) GetDBTablesAll() vo.ResultList {
 	return vo.ResultList{Content: list, TotalElements: total}
 }
 
-// 导入表
+// import table
 func (d *Gen) Insert() error {
 	var (
 		sysTables models.SysTables
@@ -68,7 +68,7 @@ func (d *Gen) Insert() error {
 
 	sysTables.TBName = d.GenTableParan.TableName
 
-	//分割表名字
+	// split table name
 	tableNameList := strings.Split(d.GenTableParan.TableName, "_")
 	for i := 0; i < len(tableNameList); i++ {
 		strStart := string([]byte(tableNameList[i])[:1])
@@ -96,7 +96,7 @@ func (d *Gen) Insert() error {
 	sysTables.FunctionName = sysTables.TableComment
 	sysTables.FunctionAuthor = "yshop"
 
-	//添加表
+	// add table
 	err = tx.Model(&models.SysTables{}).Create(&sysTables).Error
 
 	global.YSHOP_LOG.Error(sysTables)
@@ -158,7 +158,7 @@ func (d *Gen) Insert() error {
 		sysColumnList = append(sysColumnList, column)
 	}
 
-	//批量添加列
+	// batch add columns
 	err = tx.Model(&models.SysColumns{}).Create(sysColumnList).Error
 	if err != nil {
 		return err
@@ -167,7 +167,7 @@ func (d *Gen) Insert() error {
 	return nil
 }
 
-// 获取已经导入的表
+// list imported tables
 func (d *Gen) GetTablesAll() vo.ResultList {
 	maps := make(map[string]interface{})
 	if d.Name != "" {
@@ -178,7 +178,7 @@ func (d *Gen) GetTablesAll() vo.ResultList {
 	return vo.ResultList{Content: list, TotalElements: total}
 }
 
-// 获取表
+// get table
 func (d *Gen) GetTableInfo() vo.ResultList {
 	maps := make(map[string]interface{})
 	if d.Name != "" {
@@ -189,7 +189,7 @@ func (d *Gen) GetTableInfo() vo.ResultList {
 	return vo.ResultList{Content: data}
 }
 
-// 获取表的所有列
+// get all columns for table
 func (d *Gen) GetTableColumns() vo.ResultList {
 	maps := make(map[string]interface{})
 	if d.Name != "" {
@@ -224,7 +224,7 @@ func (d *Gen) ColumnSave() error {
 //}
 
 func (d *Gen) Preview() map[string]interface{} {
-	//读取模板
+	// read template
 	controllerTemp, err := template.ParseFiles("template/controller.go.template")
 	if err != nil {
 		global.YSHOP_LOG.Error(err)
@@ -255,7 +255,7 @@ func (d *Gen) Preview() map[string]interface{} {
 	global.YSHOP_DB.Where("table_id = ?", data.Id).Find(&list)
 	data.Columns = list
 
-	//绑定数据
+	// bind template data
 	var controllerByte bytes.Buffer
 	controllerTemp.Execute(&controllerByte, data)
 
@@ -271,7 +271,7 @@ func (d *Gen) Preview() map[string]interface{} {
 	var jsByte bytes.Buffer
 	jsTemp.Execute(&jsByte, data)
 
-	// 去除换行符
+	// strip newlines
 	str := util.TrimSpace(modelByte.String())
 	returnMap := gin.H{
 		"controller": controllerByte.String(),
@@ -284,7 +284,7 @@ func (d *Gen) Preview() map[string]interface{} {
 }
 
 func (d *Gen) GenCode() {
-	//读取模板
+	// read template
 	controllerTemp, err := template.ParseFiles("template/controller.go.template")
 	if err != nil {
 		global.YSHOP_LOG.Error(err)
@@ -315,7 +315,7 @@ func (d *Gen) GenCode() {
 	global.YSHOP_DB.Where("table_id = ?", data.Id).Find(&list)
 	data.Columns = list
 
-	//绑定数据
+	// bind template data
 	var controllerByte bytes.Buffer
 	controllerTemp.Execute(&controllerByte, data)
 
@@ -331,18 +331,18 @@ func (d *Gen) GenCode() {
 	var jsByte bytes.Buffer
 	jsTemp.Execute(&jsByte, data)
 
-	// 去除换行符
+	// strip newlines
 	str := util.TrimSpace(modelByte.String())
 	str2 := util.TrimSpace(vueByte.String())
 
-	//创建目录
+	// create directory
 	file.MkDir("./template/code/" + data.PackageName + "/controller/")
 	file.MkDir("./template/code/" + data.PackageName + "/models/")
 	file.MkDir("./template/code/" + data.PackageName + "/service/")
 	file.MkDir("./template/code/" + data.PackageName + "/vue/")
 	file.MkDir("./template/code/" + data.PackageName + "/js/")
 
-	//写入文件
+	// write file
 	file.FileCreate(controllerByte, "./template/code/"+data.PackageName+"/controller/"+data.ClassName+"Controller.go")
 	file.FileCreate(*bytes.NewBufferString(str), "./template/code/"+data.PackageName+"/models/"+data.ClassName+".go")
 	file.FileCreate(serviceByte, "./template/code/"+data.PackageName+"/service/"+data.ClassName+".go")

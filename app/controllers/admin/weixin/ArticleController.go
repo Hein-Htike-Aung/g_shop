@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package weixin
 
@@ -17,12 +17,12 @@ import (
 	"yixiang.co/go-mall/pkg/util"
 )
 
-// 文章api
+// articleapi
 type ArticleController struct {
 }
 
-// @Title 文章
-// @Description 文章
+// @Title article
+// @Description article
 // @Success 200 {object} app.Response
 // @router / [get]
 func (e *ArticleController) Get(c *gin.Context) {
@@ -38,8 +38,8 @@ func (e *ArticleController) Get(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, vo)
 }
 
-// @Title 文章列表
-// @Description 文章列表
+// @Title article list
+// @Description article list
 // @Success 200 {object} app.Response
 // @router / [get]
 func (e *ArticleController) GetAll(c *gin.Context) {
@@ -58,8 +58,8 @@ func (e *ArticleController) GetAll(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, vo)
 }
 
-// @Title 文章添加
-// @Description 文章添加
+// @Title add article
+// @Description add article
 // @Success 200 {object} app.Response
 // @router / [post]
 func (e *ArticleController) Post(c *gin.Context) {
@@ -87,8 +87,8 @@ func (e *ArticleController) Post(c *gin.Context) {
 
 }
 
-// @Title 文章修改
-// @Description 文章修改
+// @Title update article
+// @Description update article
 // @Success 200 {object} app.Response
 // @router / [put]
 func (e *ArticleController) Put(c *gin.Context) {
@@ -113,8 +113,8 @@ func (e *ArticleController) Put(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, nil)
 }
 
-// @Title 文章删除
-// @Description 文章删除
+// @Title delete article
+// @Description delete article
 // @Success 200 {object} app.Response
 // @router /:id [delete]
 func (e *ArticleController) Delete(c *gin.Context) {
@@ -134,8 +134,8 @@ func (e *ArticleController) Delete(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, nil)
 }
 
-// @Title 发布文章
-// @Description 发布文章
+// @Title publish article
+// @Description publish article
 // @Success 200 {object} app.Response
 // @router / [get]
 func (e *ArticleController) Pub(c *gin.Context) {

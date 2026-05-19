@@ -3,25 +3,25 @@ package constant
 var MsgFlags = map[int]string {
 	SUCCESS : "ok",
 	ERROR : "fail",
-	INVALID_PARAMS : "请求参数错误",
-	FAIL_ADD_DATA : "操作数据失败",
+	INVALID_PARAMS : "invalid request parameters",
+	FAIL_ADD_DATA : "failed to save data",
 
-	//用户相关
-	ERROR_EXIST_USER : "已存在该用户名称",
-	ERROR_NOT_EXIST_USER : "该用户不存在",
-	ERROR_PASS_USER : "用户密码错误",
-	ERROR_CAPTCHA_USER : "验证码错误",
-	FAIL_LOGOUT_USER : "退出失败",
-	//token相关
-	ERROR_AUTH_CHECK_TOKEN_FAIL : "Token鉴权失败",
-	ERROR_AUTH_CHECK_TOKEN_TIMEOUT : "Token已超时",
-	ERROR_AUTH_TOKEN : "Token生成失败",
-	ERROR_AUTH : "Token错误",
-	ERROR_AUTH_CHECK_FAIL : "无权限，请联系管理员",
+	// user-related
+	ERROR_EXIST_USER : "username already exists",
+	ERROR_NOT_EXIST_USER : "user does not exist",
+	ERROR_PASS_USER : "incorrect password",
+	ERROR_CAPTCHA_USER : "invalid captcha",
+	FAIL_LOGOUT_USER : "logout failed",
+	// token-related
+	ERROR_AUTH_CHECK_TOKEN_FAIL : "token authentication failed",
+	ERROR_AUTH_CHECK_TOKEN_TIMEOUT : "token expired",
+	ERROR_AUTH_TOKEN : "failed to generate token",
+	ERROR_AUTH : "invalid token",
+	ERROR_AUTH_CHECK_FAIL : "permission denied, contact administrator",
 
-	ERROR_UPLOAD_SAVE_IMAGE_FAIL:    "保存图片失败",
-	ERROR_UPLOAD_CHECK_IMAGE_FAIL:   "检查图片失败",
-	ERROR_UPLOAD_CHECK_IMAGE_FORMAT: "校验图片错误，图片格式或大小有问题",
+	ERROR_UPLOAD_SAVE_IMAGE_FAIL:    "failed to save image",
+	ERROR_UPLOAD_CHECK_IMAGE_FAIL:   "failed to validate image",
+	ERROR_UPLOAD_CHECK_IMAGE_FORMAT: "invalid image format or size",
 }
 
 func GetMsg(code int) string {

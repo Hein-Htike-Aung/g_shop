@@ -9,8 +9,8 @@ import (
 	"github.com/spf13/cast"
 )
 
-// LimitIP 全局限流中间件，针对 IP 进行限流
-// limit 为格式化字符串，如 "5-S" ，示例:
+// LimitIP: global rate limit by IP
+// limit format string, e.g. "5-S". Examples:
 //
 // * 5 reqs/second: "5-S"
 // * 10 reqs/minute: "10-M"
@@ -20,7 +20,7 @@ import (
 func LimitIP(limit string) gin.HandlerFunc {
 
 	return func(c *gin.Context) {
-		// 针对 IP 限流
+		// rate limit by IP
 		key := limiter.GetKeyIP(c)
 		if ok := limitHandler(c, key, limit); !ok {
 			return
@@ -29,10 +29,10 @@ func LimitIP(limit string) gin.HandlerFunc {
 	}
 }
 
-// LimitPerRoute 限流中间件，用在单独的路由中
+// LimitPerRoute: per-route rate limit
 func LimitPerRoute(limit string) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		// 针对 IP + 路由进行限流
+		// rate limit by IP and route
 		key := limiter.GetKeyRouteWithIP(c)
 		if ok := limitHandler(c, key, limit); !ok {
 			return
@@ -43,30 +43,30 @@ func LimitPerRoute(limit string) gin.HandlerFunc {
 
 func limitHandler(c *gin.Context, key string, limit string) bool {
 
-	// 获取超额的情况
+	// check rate limit
 	rate, err := limiter.CheckRate(c, key, limit)
 	if err != nil {
 		global.YSHOP_LOG.Error(err)
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
-			"message": "服务器内部错误，请稍后再试",
+			"message": "internal server error, please try again later",
 		})
 
 		return false
 	}
 
-	// ---- 设置标头信息-----
-	// X-RateLimit-Limit :10000 最大访问次数
-	// X-RateLimit-Remaining :9993 剩余的访问次数
-	// X-RateLimit-Reset :1513784506 到该时间点，访问次数会重置为 X-RateLimit-Limit
+	// ---- rate limit headers -----
+	// X-RateLimit-Limit: max requests
+	// X-RateLimit-Remaining: remaining requests
+	// X-RateLimit-Reset: reset time (counter returns to limit)
 	c.Header("X-RateLimit-Limit", cast.ToString(rate.Limit))
 	c.Header("X-RateLimit-Remaining", cast.ToString(rate.Remaining))
 	c.Header("X-RateLimit-Reset", cast.ToString(rate.Reset))
 
-	// 超额
+	// limit reached
 	if rate.Reached {
-		// 提示用户超额了
+		// tell client limit was exceeded
 		c.AbortWithStatusJSON(http.StatusTooManyRequests, gin.H{
-			"message": "接口请求太频繁",
+			"message": "too many requests",
 		})
 		return false
 	}

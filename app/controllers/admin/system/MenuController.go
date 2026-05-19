@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package system
 
@@ -17,12 +17,12 @@ import (
 	"yixiang.co/go-mall/pkg/jwt"
 )
 
-// 菜单api
+// menu API
 type MenuController struct {
 }
 
-// @Title 菜单列表
-// @Description 菜单列表
+// @Title menu list
+// @Description menu list
 // @Success 200 {object} app.Response
 // @router / [get]
 func (e *MenuController) GetAll(c *gin.Context) {
@@ -36,8 +36,8 @@ func (e *MenuController) GetAll(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, vo)
 }
 
-// @Title 菜单添加
-// @Description 菜单添加
+// @Title add menu
+// @Description add menu
 // @Success 200 {object} app.Response
 // @router / [post]
 func (e *MenuController) Post(c *gin.Context) {
@@ -62,8 +62,8 @@ func (e *MenuController) Post(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, nil)
 }
 
-// @Title 菜单修改
-// @Description 菜单修改
+// @Title update menu
+// @Description update menu
 // @Success 200 {object} app.Response
 // @router / [put]
 func (e *MenuController) Put(c *gin.Context) {
@@ -88,8 +88,8 @@ func (e *MenuController) Put(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, nil)
 }
 
-// @Title 菜单删除
-// @Description 菜单删除
+// @Title delete menu
+// @Description delete menu
 // @Success 200 {object} app.Response
 // @router / [delete]
 func (e *MenuController) Delete(c *gin.Context) {
@@ -108,8 +108,8 @@ func (e *MenuController) Delete(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, nil)
 }
 
-// @Title 菜单构建
-// @Description 菜单构建
+// @Title build menus
+// @Description build menus
 // @Success 200 {object} app.Response
 // @router /build [get]
 func (e *MenuController) Build(c *gin.Context) {
@@ -123,8 +123,8 @@ func (e *MenuController) Build(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, menus)
 }
 
-// @Title 菜单树形
-// @Description 菜单树形
+// @Title menu tree
+// @Description menu tree
 // @Success 200 {object} app.Response
 // @router /tree [get]
 func (e *MenuController) GetTree(c *gin.Context) {

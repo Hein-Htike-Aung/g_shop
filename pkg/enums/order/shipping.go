@@ -1,9 +1,9 @@
 package order
 
 const (
-	//快递
+	// express shipping
 	SHIPPING_TYPE_1 = 1
-	//门店
+	// store pickup
 	SHIPPING_TYPE_2 = 2
 )
 

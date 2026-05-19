@@ -21,10 +21,10 @@ var jwtSecret []byte
 const bearerLength = len("Bearer ")
 
 var (
-	ErrAbsent  = "token absent"  // 令牌不存在
-	ErrInvalid = "token invalid" // 令牌无效
-	ErrExpired = "token expired" // 令牌过期
-	ErrOther   = "other error"   // 其他错误
+	ErrAbsent  = "token absent"  // token missing
+	ErrInvalid = "token invalid" // token invalid
+	ErrExpired = "token expired" // token expired
+	ErrOther   = "other error"   // other error
 )
 
 type userStdClaims struct {
@@ -73,7 +73,7 @@ func GenerateAppToken(m *models.YshopUser, d time.Time) (string, error) {
 
 	return tokenString, err
 }
-//返回id
+// return id
 func GetAppUserId(c *gin.Context) (int64, error) {
 	u, exist := c.Get(constant.APP_AUTH_USER)
 	if !exist {
@@ -87,7 +87,7 @@ func GetAppUserId(c *gin.Context) (int64, error) {
 	return 0, errors.New("can't convert to user struct")
 }
 
-//返回user
+// return user
 func GetAppUser(c *gin.Context) (*vo.JwtUser, error) {
 	u, exist := c.Get(constant.APP_AUTH_USER)
 	if !exist {
@@ -100,7 +100,7 @@ func GetAppUser(c *gin.Context) (*vo.JwtUser, error) {
 	return nil, errors.New("can't convert to user struct")
 }
 
-//返回 detail user
+// return user detail
 func GetAppDetailUser(c *gin.Context) (*models.YshopUser,error) {
 	mytoken := c.Request.Header.Get("Authorization")
 	if mytoken == "" {
@@ -205,7 +205,7 @@ func ValidateToken(tokenString string) (*vo.JwtUser, error) {
 
 }
 
-//返回id
+// return id
 func GetAdminUserId(c *gin.Context) (int64, error) {
 	u, exist := c.Get(constant.ContextKeyUserObj)
 	if !exist {
@@ -219,7 +219,7 @@ func GetAdminUserId(c *gin.Context) (int64, error) {
 	return 0, errors.New("can't convert to user struct")
 }
 
-//返回user
+// return user
 func GetAdminUser(c *gin.Context) (*vo.JwtUser, error) {
 	u, exist := c.Get(constant.ContextKeyUserObj)
 	if !exist {
@@ -232,7 +232,7 @@ func GetAdminUser(c *gin.Context) (*vo.JwtUser, error) {
 	return nil, errors.New("can't convert to user struct")
 }
 
-//返回 detail user
+// return user detail
 func GetAdminDetailUser(c *gin.Context) *models.SysUser {
 	mytoken := c.Request.Header.Get("Authorization")
 	token := strings.TrimSpace(mytoken[bearerLength:])

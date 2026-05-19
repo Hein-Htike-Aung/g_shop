@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package weixin
 
@@ -14,12 +14,12 @@ import (
 	"yixiang.co/go-mall/pkg/constant"
 )
 
-// 菜单api
+// menu API
 type WechatMenuController struct {
 }
 
-// @Title 获取菜单
-// @Description 获取菜单
+// @Title get menu
+// @Description get menu
 // @Success 200 {object} app.Response
 // @router / [get]
 func (e *WechatMenuController) GetAll(c *gin.Context) {
@@ -31,8 +31,8 @@ func (e *WechatMenuController) GetAll(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, vo)
 }
 
-// @Title 菜单更新
-// @Description 菜单更新
+// @Title update menu
+// @Description update menu
 // @Success 200 {object} app.Response
 // @router / [post]
 func (e *WechatMenuController) Post(c *gin.Context) {

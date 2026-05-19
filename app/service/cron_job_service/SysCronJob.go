@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package cron_job_service
 
@@ -61,14 +61,14 @@ func (d *SysCronJob) Exec() error {
 	}
 
 	if res == 0 {
-		return errors.New("数据不存在")
+		return errors.New("data not found")
 	}
 	if !task.IsExistFunc(job.InvokeTarget) {
-		return errors.New("请在fun下添加所需目标函数")
+		return errors.New("add the target function under fun")
 	}
 	f := task.GetByName(job.InvokeTarget)
 
-	//启动任务
+	// start job
 	err = cron.Start(f, job.Id, job.CronExpression)
 	return err
 
@@ -80,7 +80,7 @@ func (d *SysCronJob) Stop() error {
 	global.YSHOP_DB.Model(&models.SysCronJob{}).Where("id = ?", d.Id).Update("status", 1)
 	global.YSHOP_LOG.Error(res)
 	if res == 0 {
-		return errors.New("数据不存在")
+		return errors.New("data not found")
 	}
 
 	if cron.IsExistCron(d.Id) {

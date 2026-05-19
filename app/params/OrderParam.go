@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package params
 
@@ -28,7 +28,7 @@ type OrderParam struct {
 
 func (p *OrderParam) Valid(v *validation.Validation)  {
 	if vv := v.Required(p.AddressId,"yshop-warning"); !vv.Ok {
-		vv.Message("请选择地址")
+		vv.Message("please select an address")
 		return
 	}
 }

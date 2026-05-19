@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package models
 
@@ -26,7 +26,7 @@ func (YshopUserBill) TableName() string {
 }
 
 
-//增加支出流水
+// add expense ledger entry
 func Expend(tx *gorm.DB,uid int64,title,category,typestr,mark,linkId string,number,balance float64) error {
 	data := &YshopUserBill{
 		Uid: uid,
@@ -42,7 +42,7 @@ func Expend(tx *gorm.DB,uid int64,title,category,typestr,mark,linkId string,numb
 	return tx.Model(&YshopUserBill{}).Create(data).Error
 }
 
-//增加收入流水
+// add income ledger entry
 func Income(tx *gorm.DB,uid int64,title,category,typestr,mark,linkId string,number,balance float64) error {
 	data := &YshopUserBill{
 		Uid: uid,

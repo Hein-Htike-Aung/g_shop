@@ -20,13 +20,13 @@ func InitRouter() *gin.Engine {
 	r.StaticFS("/upload/images", http.Dir(upload.GetImageFullPath()))
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
-	//注册后台路由
+	// register admin routes
 	admin.RegisterSystemRouters(r)
 	admin.RegisterShopRouters(r)
 	admin.RegisterToolsRouters(r)
 	admin.RegisterWeixinRouters(r)
 
-	//注册api 路由
+	// register API routes
 	//api.RegisterApiRouters(r)
 
 	return r

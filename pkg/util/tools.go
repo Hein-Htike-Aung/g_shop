@@ -12,7 +12,7 @@ import (
 	"strings"
 )
 
-// 加密
+// encrypt
 func HashAndSalt(pwd []byte) string {
 	hash, err := bcrypt.GenerateFromPassword(pwd, bcrypt.MinCost)
 	if err != nil {
@@ -21,7 +21,7 @@ func HashAndSalt(pwd []byte) string {
 	return string(hash)
 }
 
-// 密码验证
+// verify password
 func ComparePwd(hashPwd string, plainPwd []byte) bool {
 	byteHash := []byte(hashPwd)
 	err := bcrypt.CompareHashAndPassword(byteHash, plainPwd)
@@ -32,7 +32,7 @@ func ComparePwd(hashPwd string, plainPwd []byte) bool {
 	return true
 }
 
-// 判断array contain item
+// check if array contains item
 func Contains(array interface{}, val interface{}) (index int) {
 	index = -1
 	switch reflect.TypeOf(array).Kind() {
@@ -72,7 +72,7 @@ func ReturnQ(length int) string {
 }
 
 func GetKeys(m map[string]string) []string {
-	// 数组默认长度为map长度,后面append时,不需要重新申请内存和拷贝,效率很高
+	// preallocate slice to map length to avoid realloc on append
 	keys := make([]string, 0, len(m))
 	for k := range m {
 		keys = append(keys, k)
@@ -81,7 +81,7 @@ func GetKeys(m map[string]string) []string {
 }
 
 func GetValues(m map[string]string) []string {
-	// 数组默认长度为map长度,后面append时,不需要重新申请内存和拷贝,效率很高
+	// preallocate slice to map length to avoid realloc on append
 	values := make([]string, 0, len(m))
 	for _, v := range m {
 		values = append(values, v)
@@ -90,7 +90,7 @@ func GetValues(m map[string]string) []string {
 }
 
 func GetSum(m []int) int {
-	// 数组默认长度为map长度,后面append时,不需要重新申请内存和拷贝,效率很高
+	// preallocate slice to map length to avoid realloc on append
 	sum := 0
 	for _, v := range m {
 		sum = sum + v
@@ -119,7 +119,7 @@ func GetClientIP(c *gin.Context) string {
 	return ip
 }
 
-// RandomNumber 生成长度为 length 随机数字字符串
+// RandomNumber random numeric string of given length
 func RandomNumber(length int) string {
 	table := [...]byte{'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'}
 	b := make([]byte, length)
@@ -151,9 +151,9 @@ func GetTotalPage(total, size int) int {
 
 }
 
-// 实现 php 中的array_column 方法
-// @param desk [slice|map] 指针类型，方法最终的存储位置
-// @param input []struct，待转换的结构体切片
+// PHP array_column equivalent
+// @param desk [slice|map] pointer: output slice/map
+// @param input []struct，input struct slice
 // @param columnKey string
 // @param indexKey string
 func StructColumn(desk, input interface{}, columnKey, indexKey string) (err error) {
@@ -306,7 +306,7 @@ func TrimSpace(text string) string {
 	return strings.Join(result, "\n")
 }
 
-// FirstElement 安全地获取 args[0]，避免 panic: runtime error: index out of range
+// FirstElement safely return args[0] without index panic
 func FirstElement(args []string) string {
 	if len(args) > 0 {
 		return args[0]

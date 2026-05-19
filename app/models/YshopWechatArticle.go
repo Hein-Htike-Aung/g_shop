@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package models
 
@@ -29,10 +29,10 @@ func (YshopWechatArticle) TableName() string {
 
 func (a *YshopWechatArticle) Valid(v *validation.Validation) {
   if a.Title == "" {
-  	v.SetError("title","标题不能为空")
+  	v.SetError("title","title is required")
   }
 	if a.Author == "" {
-		v.SetError("author","作者不能为空")
+		v.SetError("author","author is required")
 	}
 }
 

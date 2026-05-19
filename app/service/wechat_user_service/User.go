@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package wechat_user_service
 
@@ -87,12 +87,12 @@ func (u *User) Reg() error  {
 		Model(&models.YshopUser{}).
 		Where("username = ?",u.RegParam.Account).First(&user).Error
 	if err == nil {
-		return errors.New("用户已经存在")
+		return errors.New("user already exists")
 	}
 	codeKey := constant.SMS_CODE + u.RegParam.Account
 	code :=  redis.GetString(codeKey)
 	if code != u.RegParam.Captcha {
-		return errors.New("验证码不对")
+		return errors.New("invalid verification code")
 	}
 
 	uu := models.YshopUser{
@@ -108,7 +108,7 @@ func (u *User) Reg() error  {
 
 	}
 	err = models.AddWechatUser(&uu)
-	//注册成功删除验证码缓存
+	// clear captcha cache after register
 	redis.Delete(code)
 	return err
 
@@ -123,21 +123,21 @@ func (u *User) Verify() (string,error) {
 		Model(&models.YshopUser{}).
 		Where("username = ?", u.VerityParam.Phone).First(&user).Error
 	if err == nil {
-		return "",errors.New("手机已经注册过")
+		return "",errors.New("phone number already registered")
 	}
 
 	codeKey := constant.SMS_CODE + u.VerityParam.Phone
 	if redis.Exists(codeKey) {
-		return "",errors.New("10分钟有效:"+ redis.GetString(codeKey))
+		return "",errors.New("valid for 10 minutes: "+ redis.GetString(codeKey))
 	}
 
 	code := util.RandomNumber(constant.SMS_LENGTH)
 	expireTime := time.Now().Add(time.Minute*10)
 	redis.SetEx(codeKey,code,expireTime.Unix())
 
-	//此处发送阿里云短信
-	//测试阶段直接把验证码返回
-	return "测试阶段验证码为："+code,nil
+	// send SMS via Aliyun
+	// test mode: return captcha in response
+	return "test verification code: "+code,nil
 
 
 }
@@ -215,10 +215,10 @@ func (u *User) HLogin() (*models.YshopUser,error)  {
 		Model(&models.YshopUser{}).
 		Where("username = ?",u.HLoginParam.Username).First(&user).Error
 	if err != nil {
-		return nil,errors.New("用户不存在")
+		return nil,errors.New("user does not exist")
 	}
 	if !util.ComparePwd(user.Password, []byte(u.HLoginParam.Password)) {
-		return nil,errors.New("密码不对")
+		return nil,errors.New("incorrect password")
 	}
 
 	return &user,err

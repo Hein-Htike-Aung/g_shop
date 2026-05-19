@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package params
 
@@ -15,7 +15,7 @@ type CartIdsParam struct {
 
 func (p *CartIdsParam) Valid(v *validation.Validation)  {
 	if vv := v.Required(p.Ids,"yshop-warning"); !vv.Ok {
-		vv.Message("参数有误")
+		vv.Message("invalid parameters")
 		return
 	}
 }

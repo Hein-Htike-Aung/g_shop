@@ -1,8 +1,8 @@
 package article
 
 const (
-	//单规格
+	// single spec
 	IS_PUB_0 = iota
-	//多规格
+	// multi spec
 	IS_PUB_1
 )

@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package system
 
@@ -20,12 +20,12 @@ import (
 	"yixiang.co/go-mall/pkg/util"
 )
 
-// 素材api
+// material API
 type MaterialController struct {
 }
 
-// @Title 素材列表
-// @Description 岗位列表
+// @Title material list
+// @Description job list
 // @Success 200 {object} app.Response
 // @router / [get]
 func (e *MaterialController) GetAll(c *gin.Context) {
@@ -44,8 +44,8 @@ func (e *MaterialController) GetAll(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, vo)
 }
 
-// @Title 素材添加
-// @Description 素材添加
+// @Title add material
+// @Description add material
 // @Success 200 {object} app.Response
 // @router / [post]
 func (e *MaterialController) Post(c *gin.Context) {
@@ -72,8 +72,8 @@ func (e *MaterialController) Post(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, nil)
 }
 
-// @Title 素材修改
-// @Description 素材修改
+// @Title update material
+// @Description update material
 // @Success 200 {object} app.Response
 // @router / [put]
 func (e *MaterialController) Put(c *gin.Context) {
@@ -100,8 +100,8 @@ func (e *MaterialController) Put(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, nil)
 }
 
-// @Title 素材删除
-// @Description 素材删除
+// @Title delete material
+// @Description delete material
 // @Success 200 {object} app.Response
 // @router /:id [delete]
 func (e *MaterialController) Delete(c *gin.Context) {
@@ -123,8 +123,8 @@ func (e *MaterialController) Delete(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, nil)
 }
 
-// @Title 上传图像
-// @Description 上传图像
+// @Title upload image
+// @Description upload image
 // @Success 200 {object} app.Response
 // @router /upload [post]
 func (e *MaterialController) Upload(c *gin.Context) {

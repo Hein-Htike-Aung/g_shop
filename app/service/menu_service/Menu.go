@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package menu_service
 
@@ -107,7 +107,7 @@ func buildMenus(menus []models.SysMenu) []mVO.MenuVo {
 			menuVo.Hidden = false
 		}
 
-		//判断不是外链
+		// skip external links
 		if menuO.IFrame == 0 {
 			if menuO.Pid == 0 {
 				if menuO.Component == "" {

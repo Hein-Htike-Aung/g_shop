@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package article_service
 
@@ -56,7 +56,7 @@ func (d *Article) Pub() error {
 		global.YSHOP_LOG.Error(err)
 	}
 	if data.IsPub == articleEnum.IS_PUB_1{
-		return errors.New("已经发布过啦！")
+		return errors.New("already published")
 	}
 	official := global.YSHOP_OFFICIAL_ACCOUNT
 	m := official.GetMaterial()

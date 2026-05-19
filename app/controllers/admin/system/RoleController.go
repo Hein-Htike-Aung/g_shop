@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package system
 
@@ -18,13 +18,13 @@ import (
 	"yixiang.co/go-mall/pkg/util"
 )
 
-// 角色 API
+// role API
 type RoleController struct {
 }
 
-// @Title 获取单个角色
-// @Description 获取单个角色
-// @Param    id        path     int    true        "角色ID"
+// @Title get role by ID
+// @Description get role by ID
+// @Param    id        path     int    true        "role ID"
 // @Success 200 {object} app.Response
 // @router /:id [get]
 func (e *RoleController) GetOne(c *gin.Context) {
@@ -39,8 +39,8 @@ func (e *RoleController) GetOne(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, vo)
 }
 
-// @Title 角色列表
-// @Description 角色列表
+// @Title role list
+// @Description role list
 // @Success 200 {object} app.Response
 // @router / [get]
 func (e *RoleController) GetAll(c *gin.Context) {
@@ -57,8 +57,8 @@ func (e *RoleController) GetAll(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, vo)
 }
 
-// @Title 角色添加
-// @Description 角色添加
+// @Title add role
+// @Description add role
 // @Success 200 {object} app.Response
 // @router / [post]
 func (e *RoleController) Post(c *gin.Context) {
@@ -106,8 +106,8 @@ func (e *RoleController) Put(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, nil)
 }
 
-// @Title 角色删除
-// @Description 角色删除
+// @Title delete role
+// @Description delete role
 // @Success 200 {object} app.Response
 // @router / [delete]
 func (e *RoleController) Delete(c *gin.Context) {
@@ -126,8 +126,8 @@ func (e *RoleController) Delete(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, nil)
 }
 
-// @Title 角色菜单更新
-// @Description 角色菜单更新
+// @Title update role menus
+// @Description update role menus
 // @Success 200 {object} app.Response
 // @router /menu [put]
 func (e *RoleController) Menu(c *gin.Context) {

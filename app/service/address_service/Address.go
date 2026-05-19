@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package address_service
 
@@ -35,7 +35,7 @@ type Address struct {
 
 }
 
-// del地址
+// delete address
 func (d *Address) DelAddress() error {
 	err := global.YSHOP_DB.
 		Where("uid = ?",d.Uid).
@@ -43,13 +43,13 @@ func (d *Address) DelAddress() error {
 		Delete(&models.YshopUserAddress{}).Error
 	if err != nil {
 		global.YSHOP_LOG.Error(err)
-		return  errors.New("操作失败")
+		return  errors.New("operation failed")
 	}
 
 	return nil
 }
 
-// 设置默认地址
+// set default address
 func (d *Address) SetDefault() error {
 	var err error
 	tx := global.YSHOP_DB.Begin()
@@ -64,13 +64,13 @@ func (d *Address) SetDefault() error {
 		Where("uid = ?",d.Uid).Update("is_default",0).Error
 	if err != nil {
 		global.YSHOP_LOG.Error(err)
-		return  errors.New("操作失败")
+		return  errors.New("operation failed")
 	}
 	err = tx.Model(&models.YshopUserAddress{}).
 		Where("id = ?",d.Id).Update("is_default",1).Error
 	if err != nil {
 		global.YSHOP_LOG.Error(err)
-		return  errors.New("操作失败")
+		return  errors.New("operation failed")
 	}
 	return nil
 }
@@ -114,14 +114,14 @@ func (d *Address) AddOrUpdate() (int64,error) {
 			Where("uid = ?",d.Uid).Update("is_default",0).Error
 		if err != nil {
 			global.YSHOP_LOG.Error(err)
-			return  0,errors.New("操作失败")
+			return  0,errors.New("operation failed")
 		}
 	}
 	if d.Param.Id == 0 {
 		err = models.AddUserAddress(userAddress)
 		if err != nil {
 			global.YSHOP_LOG.Error(err)
-			return  0,errors.New("操作失败")
+			return  0,errors.New("operation failed")
 		}
 	}else {
 		err = tx.Model(&models.YshopUserAddress{}).
@@ -129,7 +129,7 @@ func (d *Address) AddOrUpdate() (int64,error) {
 			Updates(userAddress).Error
 		if err != nil {
 			global.YSHOP_LOG.Error(err)
-			return  0,errors.New("操作失败")
+			return  0,errors.New("operation failed")
 		}
 	}
 	return userAddress.Id,nil

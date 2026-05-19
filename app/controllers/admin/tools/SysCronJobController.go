@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 
 package tools
@@ -20,8 +20,8 @@ import (
 type SysCronJobController struct {
 }
 
-// @Title 获取定时任务调度表列表
-// @Description 获取定时任务调度表列表
+// @Title cron job list
+// @Description cron job list
 // @Success 200 {object} app.Response
 // @router / [get]
 func (e *SysCronJobController) GetAll(c *gin.Context) {
@@ -40,8 +40,8 @@ func (e *SysCronJobController) GetAll(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, vo)
 }
 
-// @Title 添加定时任务调度表
-// @Description 添加定时任务调度表
+// @Title add cron job
+// @Description add cron job
 // @Success 200 {object} app.Response
 // @router / [post]
 func (e *SysCronJobController) Post(c *gin.Context) {
@@ -66,8 +66,8 @@ func (e *SysCronJobController) Post(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, nil)
 }
 
-// @Title 修改定时任务调度表
-// @Description 修改定时任务调度表
+// @Title update cron job
+// @Description update cron job
 // @Success 200 {object} app.Response
 // @router / [put]
 func (e *SysCronJobController) Put(c *gin.Context) {
@@ -92,8 +92,8 @@ func (e *SysCronJobController) Put(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, nil)
 }
 
-// @Title 删除定时任务调度表
-// @Description 删除定时任务调度表
+// @Title delete cron job
+// @Description delete cron job
 // @Success 200 {object} app.Response
 // @router /:id [delete]
 func (e *SysCronJobController) Delete(c *gin.Context) {
@@ -118,8 +118,8 @@ func (e *SysCronJobController) Delete(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, nil)
 }
 
-// @Title 执行定时任务调度表
-// @Description 执行定时任务调度表
+// @Title run cron job
+// @Description run cron job
 // @Success 200 {object} app.Response
 // @router /exec/:id [put]
 func (e *SysCronJobController) Exec(c *gin.Context) {
@@ -139,8 +139,8 @@ func (e *SysCronJobController) Exec(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, nil)
 }
 
-// @Title 停止定时任务调度表
-// @Description 停止定时任务调度表
+// @Title stop cron job
+// @Description stop cron job
 // @Success 200 {object} app.Response
 // @router /stop/:id [put]
 func (e *SysCronJobController) Stop(c *gin.Context) {

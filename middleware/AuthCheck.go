@@ -49,10 +49,10 @@ func Jwt() gin.HandlerFunc {
 		url := c.Request.URL.Path
 
 		method := strings.ToLower(c.Request.Method)
-		//部署线上开启
+		// enable in production
 		//prohibit := "post,put,delete"
 		//if url != "/admin/auth/logout" && strings.Contains(prohibit,method) {
-		//	ctx.Output.JSON(controllers.ErrMsg("演示环境禁止操作",40006),
+		//	ctx.Output.JSON(controllers.ErrMsg("operation disabled in demo environment",40006),
 		//		true,true)
 		//	return
 		//}
@@ -73,7 +73,7 @@ func Jwt() gin.HandlerFunc {
 		}
 
 		c.Set(constant.ContextKeyUserObj, usr)
-		//url排除
+		// URL allowlist
 		if urlExclude(url) {
 			c.Next()
 			return
@@ -83,7 +83,7 @@ func Jwt() gin.HandlerFunc {
 		cb := runtime.Runtime.GetCasbinKey(constant.YSHOP_CASBIN)
 
 		for _, roleName := range usr.Roles {
-			//超级管理员过滤掉
+			// skip super admin
 			if roleName == "admin" {
 				break
 			}
@@ -108,9 +108,9 @@ func Jwt() gin.HandlerFunc {
 }
 
 
-//url排除
+// URL allowlist
 func urlExclude(url string) bool {
-	//公共路由直接放行
+	// allow public routes
 	reg := regexp.MustCompile(`[0-9]+`)
 	newUrl := reg.ReplaceAllString(url, "*")
 	var ignoreUrls = "/admin/menu/build,/admin/user/center,/admin/user/updatePass,/admin/auth/info," +

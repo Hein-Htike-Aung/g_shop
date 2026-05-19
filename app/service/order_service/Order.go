@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package order_service
 
@@ -63,7 +63,7 @@ type Order struct {
 }
 
 
-//订单列表 -1全部 默认为0未支付 1待发货 2待收货 3待评价 4已完成
+// order list filter: -1=all, 0=unpaid, 1=to ship, 2=awaiting delivery, 3=pending review, 4=completed
 func (d *Order) GetList() ([]ordervo.StoreOrder, int, int) {
 	maps := make(map[string]interface{})
 	maps["uid"] = d.Uid
@@ -116,7 +116,7 @@ func (d *Order) GetList() ([]ordervo.StoreOrder, int, int) {
 	return ReturnListVo, totalNum, totalPage
 }
 
-//取消订单
+// cancel order
 func (d *Order) CancelOrder() error {
 	var err error
 	tx := global.YSHOP_DB.Begin()
@@ -129,29 +129,29 @@ func (d *Order) CancelOrder() error {
 	}()
 	order,err := d.GetOrderInfo()
 	if err != nil {
-		return errors.New("订单不存在")
+		return errors.New("order does not exist")
 	}
 	if order.Paid == 1 {
-		return errors.New("支付订单不可以取消")
+		return errors.New("paid order cannot be cancelled")
 	}
 	err = RegressionStock(tx,order)
 	if err != nil {
 		global.YSHOP_LOG.Error(err)
-		return errors.New("取消失败-001")
+		return errors.New("cancellation failed (001)")
 	}
 
-	//删除订单
+	// delete order
 	err = tx.Where("id = ?",order.Id).Delete(&models.YshopStoreOrder{}).Error
 	if err != nil {
 		global.YSHOP_LOG.Error(err)
-		return errors.New("取消失败-002")
+		return errors.New("cancellation failed (002)")
 	}
 
 	return nil
 
 }
 
-//回退库存
+// restore stock
 func RegressionStock(tx *gorm.DB,order *ordervo.StoreOrder) error  {
 	var err error
 	orderInfo := HandleOrder(order)
@@ -174,10 +174,10 @@ func RegressionStock(tx *gorm.DB,order *ordervo.StoreOrder) error  {
 	return nil
 }
 
-//todo 回退积分
-//todo 回退优惠券
+// TODO: restore points
+// TODO: restore coupon
 
-//订单评价
+// order review
 func (d *Order) OrderComment() error {
 	var err error
 	tx := global.YSHOP_DB.Begin()
@@ -190,7 +190,7 @@ func (d *Order) OrderComment() error {
 	}()
 	order,err := d.GetOrderInfo()
 	if err != nil {
-		return errors.New("订单不存在")
+		return errors.New("order does not exist")
 	}
 	var replys []models.YshopStoreProductReply
 	for _,data := range d.ReplyParam {
@@ -210,17 +210,17 @@ func (d *Order) OrderComment() error {
 		"product_score", "service_score", "comment", "pics", "unique").Create(replys).Error
 	if err != nil {
 		global.YSHOP_LOG.Error(err)
-		return errors.New("评价失败-0001")
+		return errors.New("review failed (0001)")
 	}
 	err = tx.Model(&models.YshopStoreOrder{}).Where("id = ?",order.Id).Update("status",3).Error
 	if err != nil {
 		global.YSHOP_LOG.Error(err)
-		return errors.New("评价失败-0002")
+		return errors.New("review failed (0002)")
 	}
 	return nil
 }
 
-//收货
+// confirm receipt
 func (d *Order) TakeOrder() error {
 	var err error
 	tx := global.YSHOP_DB.Begin()
@@ -233,18 +233,18 @@ func (d *Order) TakeOrder() error {
 	}()
 	order,err := d.GetOrderInfo()
 	if err != nil {
-		return errors.New("订单不存在")
+		return errors.New("order does not exist")
 	}
 	if order.Status != 1 {
-		return errors.New("订单状态错误")
+		return errors.New("invalid order status")
 	}
 
-	//修改订单状态
+	// update order status
 	err = tx.Model(&models.YshopStoreOrder{}).Where("id = ?",order.Id).Update("status",2).Error
-	//增加状态
-	err = models.AddStoreOrderStatus(tx, order.Id, "user_take_delivery", "用户已收货")
+	// add order status log
+	err = models.AddStoreOrderStatus(tx, order.Id, "user_take_delivery", "user received goods")
 
-	//奖励积分
+	// award points
 	if order.GainIntegral > 0 {
 		err = tx.Exec("update yshop_user set integral = integral + ?" +
 			" where id = ?",order.Uid,order.GainIntegral).Error
@@ -252,10 +252,10 @@ func (d *Order) TakeOrder() error {
 			global.YSHOP_LOG.Error(err)
 			return err
 		}
-		//增加流水
+		// add ledger entry
 		number,_ := com.StrTo(order.GainIntegral).Float64()
-		mark := "购买商品赠送积分" + com.ToStr(order.GainIntegral) + "积分"
-		err = models.Income(tx,order.Uid,"购买商品赠送积分","integral","gain",
+		mark := "purchase product bonus points" + com.ToStr(order.GainIntegral) + " points"
+		err = models.Income(tx,order.Uid,"purchase product bonus points","integral","gain",
 			mark,com.ToStr(order.Id),number,number)
 		if err != nil {
 			global.YSHOP_LOG.Error(err)
@@ -263,12 +263,12 @@ func (d *Order) TakeOrder() error {
 		}
 	}
 
-	//todo 分销
+	// TODO: distribution
 
 	return nil
 }
 
-//创建订单
+// create order
 func (d *Order) CreateOrder() (*models.YshopStoreOrder, error) {
 	var err error
 	tx := global.YSHOP_DB.Begin()
@@ -290,7 +290,7 @@ func (d *Order) CreateOrder() (*models.YshopStoreOrder, error) {
 		return nil, err
 	}
 
-	//todo 门店
+	// TODO: store pickup
 
 	var (
 		userAddress models.YshopUserAddress
@@ -304,7 +304,7 @@ func (d *Order) CreateOrder() (*models.YshopStoreOrder, error) {
 		Where("id = ?", d.OrderParam.AddressId).
 		First(&userAddress).Error
 	if err != nil {
-		return nil, errors.New("地址出错")
+		return nil, errors.New("invalid address")
 	}
 
 	cacheDto, _ := getCacheOrderInfo(d.Uid, d.Key)
@@ -317,7 +317,7 @@ func (d *Order) CreateOrder() (*models.YshopStoreOrder, error) {
 		cartIds = append(cartIds, strconv.FormatInt(cart.Id, 10))
 		totalNum = totalNum + cart.CartNum
 
-		//积分
+		// points
 		gain := cart.ProductInfo.GiveIntegral
 		if gain > 0 {
 			gainIntegral = gainIntegral + cart.CartNum*gain
@@ -358,24 +358,24 @@ func (d *Order) CreateOrder() (*models.YshopStoreOrder, error) {
 			"paid", "use_integral", "back_integral", "gain_integral", "mark", "unique", "shipping_type", "pay_type").
 		Create(storeOrder).Error
 	if err != nil {
-		return nil, errors.New("订单生成失败")
+		return nil, errors.New("failed to create order")
 	}
-	//todo 扣积分
-	//todo 消费优惠券
+	// TODO: deduct points
+	// TODO: apply coupon
 	orderInfoList := make([]models.YshopStoreOrderCartInfo, 0)
-	//减库存加销量
+	// decrement stock, increment sales
 	for _, vo := range cartInfo {
 		err = tx.Exec("update yshop_store_product_attr_value set stock=stock - ?, sales=sales + ?"+
 			" where product_id = ? and `unique` = ? and stock >= ?",
 			vo.CartNum, vo.CartNum, vo.ProductId, vo.ProductAttrUnique, vo.CartNum).Error
 		if err != nil {
-			return nil, errors.New("库存扣减失败-00000")
+			return nil, errors.New("stock deduction failed (00000)")
 		}
 		err = tx.Exec("update yshop_store_product set stock=stock - ?, sales=sales + ?"+
 			" where id = ? and stock >= ?",
 			vo.CartNum, vo.CartNum, vo.ProductId, vo.CartNum).Error
 		if err != nil {
-			return nil, errors.New("库存扣减失败-00001")
+			return nil, errors.New("stock deduction failed (00001)")
 		}
 
 		b, _ := json.Marshal(vo)
@@ -392,19 +392,19 @@ func (d *Order) CreateOrder() (*models.YshopStoreOrder, error) {
 		orderInfoList = append(orderInfoList, orderCartInfo)
 	}
 
-	//保存购物车商品信息
+	// save cart line items
 	err = tx.Model(&models.YshopStoreOrderCartInfo{}).Create(orderInfoList).Error
 	if err != nil {
-		return nil, errors.New("订单创建失败-00001")
+		return nil, errors.New("order creation failed (00001)")
 	}
 
-	//增加状态
-	err = models.AddStoreOrderStatus(tx, storeOrder.Id, "yshop_create_order", "订单生成")
+	// add order status log
+	err = models.AddStoreOrderStatus(tx, storeOrder.Id, "yshop_create_order", "order created")
 	if err != nil {
-		return nil, errors.New("订单创建失败-00002")
+		return nil, errors.New("order creation failed (00002)")
 	}
 
-	//todo 订单自动取消处理
+	// TODO: auto-cancel order
 
 	return storeOrder, nil
 }
@@ -431,7 +431,7 @@ func (d *Order) GetOrderInfo() (*ordervo.StoreOrder,error) {
 	return &vo,nil
 }
 
-//处理订单状态
+// map order status for client
 func HandleOrder(order *ordervo.StoreOrder) *ordervo.StoreOrder {
 	var (
 		orderInfoList []models.YshopStoreOrderCartInfo
@@ -450,42 +450,42 @@ func HandleOrder(order *ordervo.StoreOrder) *ordervo.StoreOrder {
 
 	if order.Paid == 0 {
 		statusDto.Class = "nobuy"
-		statusDto.Msg = "未支付"
+		statusDto.Msg = "unpaid"
 		statusDto.Type = "0"
-		statusDto.Title = "未支付"
+		statusDto.Title = "unpaid"
 	} else if order.RefundStatus == 1 {
 		statusDto.Class = "state-sqtk"
-		statusDto.Msg = "商家审核中，请耐心等待"
+		statusDto.Msg = "merchant review in progress, please wait"
 		statusDto.Type = "-1"
-		statusDto.Title = "申请退款中"
+		statusDto.Title = "refund requested"
 	} else if order.RefundStatus == 2 {
 		statusDto.Class = "state-sqtk"
-		statusDto.Msg = "已经为你退款，感谢您的支付"
+		statusDto.Msg = "refunded, thank you for your payment"
 		statusDto.Type = "-2"
-		statusDto.Title = "已退款"
+		statusDto.Title = "refunded"
 	} else if order.Status == 0 {
 		if order.ShippingType == 1 {
 			statusDto.Class = "state-nfh"
-			statusDto.Msg = "商家未发货，请耐心等待"
+			statusDto.Msg = "merchant has not shipped yet, please wait"
 			statusDto.Type = "1"
-			statusDto.Title = "未发货"
+			statusDto.Title = "not shipped"
 		}
 	} else if order.Status == 2 {
 		statusDto.Class = "state-ypj"
-		statusDto.Msg = "已收货，快去评价一下吧"
+		statusDto.Msg = "received, leave a review"
 		statusDto.Type = "3"
-		statusDto.Title = "待评价"
+		statusDto.Title = "pending review"
 	} else if order.RefundStatus == 3 {
 		statusDto.Class = "state-ytk"
-		statusDto.Msg = "交易完成，感谢您的支持"
+		statusDto.Msg = "transaction complete, thank you"
 		statusDto.Type = "4"
-		statusDto.Title = "交易完成"
+		statusDto.Title = "transaction complete"
 	}
 
 	if order.PayType == "weixin" {
-		statusDto.PayType = "微信支付"
+		statusDto.PayType = "WeChat Pay"
 	} else {
-		statusDto.PayType = "余额支付"
+		statusDto.PayType = "balance payment"
 	}
 	order.StatusDto = statusDto
 
@@ -494,7 +494,7 @@ func HandleOrder(order *ordervo.StoreOrder) *ordervo.StoreOrder {
 
 func (d *Order) Check() (map[string]interface{}, error) {
 	if d.Key == "" {
-		return nil, errors.New("参数错误")
+		return nil, errors.New("invalid parameters")
 	}
 	var order *models.YshopStoreOrder
 	error := global.YSHOP_DB.Model(&models.YshopStoreOrder{}).
@@ -509,14 +509,14 @@ func (d *Order) Check() (map[string]interface{}, error) {
 		return gin.H{
 			"status": "EXTEND_ORDER",
 			"result": orderExtendDto,
-			"msg":    "订单已生成",
+			"msg":    "order created",
 		}, nil
 	}
 
 	return nil, nil
 }
 
-//计算订单
+// compute order totals
 func (d *Order) ComputeOrder() (*ordervo.Compute, error) {
 	global.YSHOP_LOG.Info(d.ComputeParam)
 	var (
@@ -528,21 +528,21 @@ func (d *Order) ComputeOrder() (*ordervo.Compute, error) {
 	)
 	cacheDto, err := getCacheOrderInfo(d.Uid, d.Key)
 	if err != nil {
-		return nil, errors.New("订单已过期，请重新刷新当前页面")
+		return nil, errors.New("order expired, please refresh the page")
 	}
 	payPrice := cacheDto.PriceGroup.TotalPrice
 
-	//todo 运费模板
-	//目前运费统一0
+	// TODO: shipping template
+	// shipping fee fixed at 0 for now
 
-	//todo 目前不处理门店
+	// TODO: store pickup not implemented
 	payPrice = payPrice + payPostage
 
-	//todo 秒杀 砍价 拼团
+	// TODO: flash sale, bargain, group buy
 
-	//todo 优惠券
+	// TODO: coupons
 
-	//todo 积分抵扣
+	// TODO: points deduction
 
 	return &ordervo.Compute{
 		TotalPrice:     cacheDto.PriceGroup.TotalPrice,
@@ -556,7 +556,7 @@ func (d *Order) ComputeOrder() (*ordervo.Compute, error) {
 
 }
 
-//确认订单
+// confirm order preview
 func (d *Order) ConfirmOrder() (*ordervo.ConfirmOrder, error) {
 	cartService := cart_service.Cart{
 		Uid:     d.Uid,
@@ -567,25 +567,25 @@ func (d *Order) ConfirmOrder() (*ordervo.ConfirmOrder, error) {
 	invalid := vo["invalid"].([]cartVo.Cart)
 	valid := vo["valid"].([]cartVo.Cart)
 	if len(invalid) > 0 {
-		return nil, errors.New("有失效的购物车，请重新提交")
+		return nil, errors.New("cart contains invalid items, please resubmit")
 	}
 	if len(valid) == 0 {
-		return nil, errors.New("请提交购买的商品")
+		return nil, errors.New("please submit items to purchase")
 	}
 
 	var (
-		deduction      = false //抵扣
-		enableIntegral = true  //积分
+		deduction      = false //deduction
+		enableIntegral = true  // points
 		userAddress    models.YshopUserAddress
 	)
-	//获取默认地址
+	// get default address
 	global.YSHOP_DB.Model(&models.YshopUserAddress{}).
 		Where("uid = ?", d.Uid).
 		Where("is_default = ?", 1).
 		First(&userAddress)
 	priceGroup := getOrderPriceGroup(valid, &userAddress)
 	cacheKey := cacheOrderInfo(d.Uid, valid, priceGroup, orderDto.Other{})
-	//优惠券 todo
+	// coupons TODO
 	var user userVO.User
 
 	e := copier.Copy(&user, d.User)
@@ -642,7 +642,7 @@ func getOrderPriceGroup(cartInfo []cartVo.Cart, userAddress *models.YshopUserAdd
 		//vipPrice float64
 		//payIntegral float64
 	)
-	//计算价格
+	// compute price
 	for _, val := range cartInfo {
 		dc1 := decimal.NewFromFloat(val.TruePrice).Mul(decimal.NewFromFloat(float64(val.CartNum)))
 		sum1, _ := dc1.Float64()
@@ -740,7 +740,7 @@ func (d *Order) GetAll() vo.ResultList {
 }
 
 func orderStatus(paid, status, refund_status int) int {
-	//todo  1-未付款 2-未发货 3-退款中 4-待收货 5-待评价 6-已完成 7-已退款
+	// TODO status map: 1=unpaid 2=not shipped 3=refunding 4=awaiting delivery 5=pending review 6=completed 7=refunded
 	_status := 0
 
 	if paid == 0 && status == 0 && refund_status == 0 {
@@ -766,38 +766,38 @@ func orderStatus(paid, status, refund_status int) int {
 func orderStatusStr(paid, status, shipping_type, refund_status int) string {
 	statusName := ""
 	if paid == 0 && status == 0 {
-		statusName = "未支付"
+		statusName = "unpaid"
 	} else if paid == 1 && status == 0 && shipping_type == 1 && refund_status == 0 {
-		statusName = "未发货"
+		statusName = "not shipped"
 	} else if paid == 1 && status == 0 && shipping_type == 2 && refund_status == 0 {
-		statusName = "未核销"
+		statusName = "not verified"
 	} else if paid == 1 && status == 1 && shipping_type == 1 && refund_status == 0 {
-		statusName = "待收货"
+		statusName = "awaiting delivery"
 	} else if paid == 1 && status == 1 && shipping_type == 2 && refund_status == 0 {
-		statusName = "未核销"
+		statusName = "not verified"
 	} else if paid == 1 && status == 2 && refund_status == 0 {
-		statusName = "待评价"
+		statusName = "pending review"
 	} else if paid == 1 && status == 3 && refund_status == 0 {
-		statusName = "已完成"
+		statusName = "completed"
 	} else if paid == 1 && refund_status == 1 {
-		statusName = "退款中"
+		statusName = "refunding"
 	} else if paid == 1 && refund_status == 2 {
-		statusName = "已退款"
+		statusName = "refunded"
 	}
 
 	return statusName
 }
 
 func payTypeName(pay_type string, paid int) string {
-	payTypeName := "未支付"
+	payTypeName := "unpaid"
 	if paid == 1 {
 		switch pay_type {
 		case "weixin":
-			payTypeName = "微信支付"
+			payTypeName = "WeChat Pay"
 		case "yue":
-			payTypeName = "余额支付"
+			payTypeName = "balance payment"
 		case "integral":
-			payTypeName = "积分兑换"
+			payTypeName = " points redemption"
 		}
 	}
 
@@ -816,12 +816,12 @@ func (d *Order) Save() error {
 
 func (d *Order) Deliver() error {
 	if d.M.Status != 0 {
-		return errors.New("订单状态错误")
+		return errors.New("invalid order status")
 	}
 	var express models.YshopExpress
     err := global.YSHOP_DB.Model(&models.YshopExpress{}).Where("name = ?",d.M.DeliveryName).First(&express).Error
 	if err != nil {
-		return errors.New("请先添加快递公司")
+		return errors.New("please add a shipping carrier first")
 	}
 	global.YSHOP_LOG.Info(d.M.DeliveryId)
 	d.M.Status = 1

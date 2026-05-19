@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package user_service
 
@@ -37,7 +37,7 @@ type User struct {
 func (u *User) UpdateImage() error {
 	user ,err := models.GetUserById(u.Id)
 	if err != nil {
-		return  errors.New("用户不存在")
+		return  errors.New("user does not exist")
 	}
 
 	user.Avatar = u.ImageUrl
@@ -47,10 +47,10 @@ func (u *User) UpdateImage() error {
 func (u *User) UpdatePass() error {
 	user ,err := models.GetUserById(u.Id)
 	if err != nil {
-		return  errors.New("用户不存在")
+		return  errors.New("user does not exist")
 	}
 	if !util.ComparePwd(user.Password,[]byte(u.UserPass.OldPass)) {
-		return  errors.New("旧密码错误密码错误")
+		return  errors.New("incorrect old password")
 	}
 	user.Password = util.HashAndSalt([]byte(u.UserPass.NewPass))
 	return models.UpdateCurrentUser(&user)

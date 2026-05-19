@@ -31,7 +31,7 @@ var doc = `{
     "paths": {
         "/": {
             "get": {
-                "description": "素材分组列表",
+                "description": "material group list",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -42,7 +42,7 @@ var doc = `{
                 }
             },
             "put": {
-                "description": "素材分组修改",
+                "description": "update material group",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -63,7 +63,7 @@ var doc = `{
                 }
             },
             "delete": {
-                "description": "用户删除",
+                "description": "delete user",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -76,11 +76,11 @@ var doc = `{
         },
         "/:id": {
             "get": {
-                "description": "获取单个角色",
+                "description": "get role by ID",
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "角色ID",
+                        "description": "role ID",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -96,7 +96,7 @@ var doc = `{
                 }
             },
             "delete": {
-                "description": "素材分组删除",
+                "description": "delete material group",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -109,7 +109,7 @@ var doc = `{
         },
         "/addOrSave": {
             "post": {
-                "description": "商品添加",
+                "description": "add product",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -122,7 +122,7 @@ var doc = `{
         },
         "/admin/login": {
             "post": {
-                "description": "登录",
+                "description": "login",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -135,7 +135,7 @@ var doc = `{
         },
         "/build": {
             "get": {
-                "description": "菜单构建",
+                "description": "build menus",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -148,12 +148,12 @@ var doc = `{
         },
         "/captcha": {
             "get": {
-                "description": "获取验证码"
+                "description": "get captcha"
             }
         },
         "/center": {
             "put": {
-                "description": "用户修改个人信息",
+                "description": "update user profile",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -166,7 +166,7 @@ var doc = `{
         },
         "/info": {
             "get": {
-                "description": "获取用户信息",
+                "description": "get user info",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -179,7 +179,7 @@ var doc = `{
         },
         "/info/:id": {
             "get": {
-                "description": "获取商品信息",
+                "description": "get product info",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -192,7 +192,7 @@ var doc = `{
         },
         "/isFormatAttr/:id": {
             "post": {
-                "description": "商品sku生成",
+                "description": "generate product SKU",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -205,7 +205,7 @@ var doc = `{
         },
         "/logout": {
             "delete": {
-                "description": "退出登录",
+                "description": "logout",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -218,7 +218,7 @@ var doc = `{
         },
         "/menu": {
             "put": {
-                "description": "角色菜单更新",
+                "description": "update role menus",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -231,7 +231,7 @@ var doc = `{
         },
         "/onsale/:id": {
             "post": {
-                "description": "商品上下架",
+                "description": "toggle product shelf status",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -244,7 +244,7 @@ var doc = `{
         },
         "/save/:id": {
             "post": {
-                "description": "商品规格sku添加",
+                "description": "add product spec SKU",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -257,7 +257,7 @@ var doc = `{
         },
         "/tree": {
             "get": {
-                "description": "菜单树形",
+                "description": "menu tree",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -270,7 +270,7 @@ var doc = `{
         },
         "/updateAvatar": {
             "post": {
-                "description": "用户上传图像",
+                "description": "upload user avatar",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -283,7 +283,7 @@ var doc = `{
         },
         "/updatePass": {
             "post": {
-                "description": "用户修改密码",
+                "description": "change user password",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -360,7 +360,7 @@ var SwaggerInfo = swaggerInfo{
 	BasePath:    "",
 	Schemes:     []string{},
 	Title:       "gin-shop  API",
-	Description: "gin-shop商城后台管理系统",
+	Description: "yshop gin mall admin API",
 }
 
 type s struct{}

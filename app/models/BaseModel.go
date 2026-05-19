@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package models
 
@@ -38,12 +38,12 @@ func Setup() {
 		global.YSHOP_CONFIG.Database.Host,
 		global.YSHOP_CONFIG.Database.Name)
 	newLogger := logger.New(
-		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer（日志输出的目标，前缀和日志包含的内容——译者注）
+		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer for log output
 		logger.Config{
-			SlowThreshold:             time.Second,  // 慢 SQL 阈值
-			LogLevel:                  logger.Error, // 日志级别
-			IgnoreRecordNotFoundError: true,         // 忽略ErrRecordNotFound（记录未找到）错误
-			Colorful:                  true,         // 禁用彩色打印
+			SlowThreshold:             time.Second,  // slow SQL threshold
+			LogLevel:                  logger.Error, // log level
+			IgnoreRecordNotFoundError: true,         // ignore ErrRecordNotFound
+			Colorful:                  true,         // enable colorized output
 		},
 	)
 
@@ -60,13 +60,13 @@ func Setup() {
 		log.Printf("[info] gorm %s", err)
 	}
 
-	// SetMaxIdleConns 设置空闲连接池中连接的最大数量
+	// SetMaxIdleConns: max idle connections
 	sqlDB.SetMaxIdleConns(10)
 
-	// SetMaxOpenConns 设置打开数据库连接的最大数量。
+	// SetMaxOpenConns: max open connections
 	sqlDB.SetMaxOpenConns(100)
 
-	// SetConnMaxLifetime 设置了连接可复用的最大时间。
+	// SetConnMaxLifetime: max connection lifetime
 	sqlDB.SetConnMaxLifetime(time.Hour)
 
 	global.YSHOP_DB = db

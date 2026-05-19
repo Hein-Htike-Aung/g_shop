@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package cart_service
 
@@ -58,11 +58,11 @@ func (d *Cart) ChangeCartNum() error {
 		First(&cart).Error
 	if err != nil {
 		global.YSHOP_LOG.Error(err)
-		return errors.New("当前购物车不存在")
+		return errors.New("cart item not found")
 	}
 	err = CheckStock(cart.ProductId,d.NumParam.Number,cart.ProductAttrUnique)
 	if err != nil {
-		return errors.New("改产品库存不足"+strconv.Itoa(d.NumParam.Number))
+		return errors.New("insufficient stock for this product"+strconv.Itoa(d.NumParam.Number))
 	}
 	if d.NumParam.Number == cart.CartNum {
 		return nil
@@ -73,7 +73,7 @@ func (d *Cart) ChangeCartNum() error {
 		Update("cart_num",d.NumParam.Number).Error
 	if err != nil {
 		global.YSHOP_LOG.Error(err)
-		return errors.New("修改失败")
+		return errors.New("update failed")
 	}
 	return nil
 }
@@ -130,7 +130,7 @@ func (d *Cart) GetCartList() map[string]interface{} {
 			invalid = append(invalid, cartVo)
 			continue
 		}
-		//获取有效购物车
+		// load valid cart items
 		var productAttrValue models.YshopStoreProductAttrValue
 		global.YSHOP_DB.Model(&models.YshopStoreProductAttrValue{}).
 			Where("`unique` = ?",cart.ProductAttrUnique).First(&productAttrValue)
@@ -188,7 +188,7 @@ func (d *Cart) AddCart()(int64,error) {
 		whereCart.CartNum = d.Param.CartNum
 		err = global.YSHOP_DB.Model(&models.YshopStoreCart{}).Create(whereCart).Error
 		if err != nil {
-			return 0,errors.New("加入购物车失败")
+			return 0,errors.New("failed to add to cart")
 		}
 
 		return whereCart.Id, nil
@@ -199,7 +199,7 @@ func (d *Cart) AddCart()(int64,error) {
 		err = global.YSHOP_DB.Model(&models.YshopStoreCart{}).
 			Where("id = ?",cart.Id).Save(cart).Error
 		if err != nil {
-			return 0,errors.New("加入购物车失败")
+			return 0,errors.New("failed to add to cart")
 		}
 	}
 
@@ -217,7 +217,7 @@ func CheckStock(productId int64,cartNum int,unique string) error  {
 		First(&storeProduct).Error
 	if err != nil {
 		global.YSHOP_LOG.Error(err)
-		return errors.New("该商品已下架或者删除")
+		return errors.New("product is off shelf or removed")
 	}
 	productService := product_service.Product {
 		Id: productId,
@@ -226,7 +226,7 @@ func CheckStock(productId int64,cartNum int,unique string) error  {
 
 	stock := productService.GetStock()
 	if stock < cartNum {
-		return errors.New(storeProduct.StoreName+"库存不足"+strconv.Itoa(cartNum))
+		return errors.New(storeProduct.StoreName+"insufficient stock"+strconv.Itoa(cartNum))
 	}
 	return nil
 }

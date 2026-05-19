@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package system
 
@@ -14,12 +14,12 @@ import (
 	"yixiang.co/go-mall/pkg/util"
 )
 
-// 角色 API
+// role API
 type LogController struct {
 }
 
-// @Title 日志列表
-// @Description 日志列表
+// @Title log list
+// @Description log list
 // @Success 200 {object} app.Response
 // @router / [get]
 func (e *LogController) GetAll(c *gin.Context) {
@@ -36,8 +36,8 @@ func (e *LogController) GetAll(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, vo)
 }
 
-// @Title 日志删除
-// @Description 日志删除
+// @Title delete logs
+// @Description delete logs
 // @Success 200 {object} app.Response
 // @router / [delete]
 func (e *LogController) Delete(c *gin.Context) {

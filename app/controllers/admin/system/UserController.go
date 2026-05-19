@@ -1,7 +1,7 @@
 /**
 * Copyright (C) 2020-2021
 * All rights reserved, Designed By www.yixiang.co
-* 注意：本软件为www.yixiang.co开发研制
+* Note: This software was developed by www.yixiang.co
  */
 package system
 
@@ -20,12 +20,12 @@ import (
 	"yixiang.co/go-mall/pkg/util"
 )
 
-// 用户 API
+// user API
 type UserController struct {
 }
 
-// @Title 用户列表
-// @Description 用户列表
+// @Title user list
+// @Description user list
 // @Success 200 {object} app.Response
 // @router / [get]
 func (e *UserController) GetAll(c *gin.Context) {
@@ -48,8 +48,8 @@ func (e *UserController) GetAll(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, vo)
 }
 
-// @Title 用户添加
-// @Description 用户添加
+// @Title add user
+// @Description add user
 // @Success 200 {object} app.Response
 // @router / [post]
 func (e *UserController) Post(c *gin.Context) {
@@ -75,8 +75,8 @@ func (e *UserController) Post(c *gin.Context) {
 
 }
 
-// @Title 用户编辑
-// @Description 用户编辑
+// @Title update user
+// @Description update user
 // @Success 200 {object} app.Response
 // @router / [put]
 func (e *UserController) Put(c *gin.Context) {
@@ -101,8 +101,8 @@ func (e *UserController) Put(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, nil)
 }
 
-// @Title 用户删除
-// @Description 用户删除
+// @Title delete user
+// @Description delete user
 // @Success 200 {object} app.Response
 // @router / [delete]
 func (e *UserController) Delete(c *gin.Context) {
@@ -122,8 +122,8 @@ func (e *UserController) Delete(c *gin.Context) {
 
 }
 
-// @Title 用户上传图像
-// @Description 用户上传图像
+// @Title upload user avatar
+// @Description upload user avatar
 // @Success 200 {object} app.Response
 // @router /updateAvatar [post]
 func (e *UserController) Avatar(c *gin.Context) {
@@ -172,8 +172,8 @@ func (e *UserController) Avatar(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, nil)
 }
 
-// @Title 用户修改密码
-// @Description 用户修改密码
+// @Title change user password
+// @Description change user password
 // @Success 200 {object} app.Response
 // @router /updatePass [post]
 func (e *UserController) Pass(c *gin.Context) {
@@ -196,8 +196,8 @@ func (e *UserController) Pass(c *gin.Context) {
 	appG.Response(http.StatusOK, constant.SUCCESS, nil)
 }
 
-// @Title 用户修改个人信息
-// @Description 用户修改个人信息
+// @Title update user profile
+// @Description update user profile
 // @Success 200 {object} app.Response
 // @router /center [put]
 func (e *UserController) Center(c *gin.Context) {
