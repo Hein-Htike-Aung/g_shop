@@ -16,15 +16,6 @@ an e-commerce admin and mall API. This repo provides REST APIs for shop manageme
 | CLI | Cobra (`serve` command) |
 | Other | WeChat SDK, gopay, cron, code generator |
 
-## Related repositories
-
-| Component | Gitee | GitHub |
-|-----------|-------|--------|
-| Backend (this repo) | [yshop-gin](https://gitee.com/guchengwuyue/yshop-gin) | [yshop-gin](https://github.com/guchengwuyue/yshop-gin) |
-| Admin UI (Vue) | [yshop-gin-vue](https://gitee.com/guchengwuyue/yshop-gin-vue) | [yshop-gin-vue](https://github.com/guchengwuyue/yshop-gin-vue) |
-
-The PC storefront frontend is bundled separately (see upstream docs under `pc-vue/`).
-
 ## Features
 
 **Admin / system**
